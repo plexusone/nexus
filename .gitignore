@@ -31,3 +31,7 @@ docs/IDEATION_CHAT*.md
 *.key
 credentials.json
 secrets.json
+
+# MkDocs
+site/
+apps/desktop/Nexus.app/
