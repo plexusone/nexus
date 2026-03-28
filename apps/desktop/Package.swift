@@ -12,7 +12,7 @@ let package = Package(
         .executable(name: "Nexus", targets: ["Nexus"])
     ],
     dependencies: [
-        .package(url: "https://github.com/migueldeicaza/SwiftTerm.git", from: "1.2.0")
+        .package(url: "https://github.com/migueldeicaza/SwiftTerm.git", branch: "main")
     ],
     targets: [
         .executableTarget(
