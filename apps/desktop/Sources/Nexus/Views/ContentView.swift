@@ -2,13 +2,21 @@ import SwiftUI
 
 /// Main content view for a Nexus window
 struct ContentView: View {
-    @State private var sessionManager = SessionManager()
+    @Environment(AppState.self) private var appState
     @State private var paneManager = PaneManager()
-    @State private var stateManager = StateManager()
     @State private var gridConfig = GridConfig(columns: 2, rows: 1)
+    @State private var windowId: UUID?
     @State private var showNewSessionSheet = false
     @State private var showRestorePrompt = false
     @State private var isReady = false
+
+    private var sessionManager: SessionManager {
+        appState.sessionManager
+    }
+
+    private var windowStateManager: WindowStateManager {
+        appState.windowStateManager
+    }
 
     var body: some View {
         VStack(spacing: 0) {
@@ -71,29 +79,26 @@ struct ContentView: View {
         }
         .sheet(isPresented: $showNewSessionSheet) {
             NewSessionSheet(
-                sessionManager: sessionManager,
                 onSessionCreated: { session in
                     // Attach to first empty pane
                     attachToFirstEmptyPane(session)
                 }
             )
+            .environment(appState)
         }
         .alert("Restore Previous Session?", isPresented: $showRestorePrompt) {
             Button("Restore") {
-                restoreState()
-                // Save immediately after restore
-                saveState()
+                restoreWindowState()
             }
             Button("Start Fresh", role: .destructive) {
-                stateManager.clearState()
-                // Save the fresh state
-                saveState()
+                windowStateManager.clearState()
+                registerWindow()
             }
         } message: {
-            if let timeAgo = stateManager.savedAtDescription(),
-               let state = stateManager.savedState {
-                let attachmentCount = state.paneAttachments.count
-                Text("Found a saved session from \(timeAgo) with \(state.gridColumns)×\(state.gridRows) layout and \(attachmentCount) attached pane(s).")
+            let configs = windowStateManager.configsToRestore()
+            if let config = configs.first {
+                let attachmentCount = config.paneAttachments.count
+                Text("Found \(configs.count) saved window(s). First window: \(config.gridColumns)×\(config.gridRows) layout with \(attachmentCount) attached pane(s).")
             } else {
                 Text("Would you like to restore your previous session?")
             }
@@ -101,7 +106,13 @@ struct ContentView: View {
         .task {
             await initialize()
         }
-        .onChange(of: gridConfig) { _, newConfig in
+        .onDisappear {
+            // Unregister window when it closes
+            if let id = windowId {
+                windowStateManager.unregisterWindow(id: id)
+            }
+        }
+        .onChange(of: gridConfig) { _, _ in
             saveState()
         }
         .onChange(of: paneManager.attachedSessions) { _, _ in
@@ -113,50 +124,69 @@ struct ContentView: View {
         // Small delay to let the window appear
         try? await Task.sleep(for: .milliseconds(100))
 
-        // Check tmux availability
-        let tmuxAvailable = await sessionManager.checkTmuxAvailable()
-        if !tmuxAvailable {
-            print("Warning: tmux is not installed")
-        }
-
-        // Initial refresh
-        await sessionManager.refresh()
-
-        // Start monitoring
-        sessionManager.startMonitoring()
+        // Start the shared app state monitoring (idempotent - only runs once)
+        await appState.startMonitoring()
 
         // Mark as ready
         isReady = true
 
-        // Check for saved state after sessions are loaded
-        if stateManager.hasSavedState {
+        guard windowId == nil else { return }
+
+        // Check if there are pending configs to restore
+        if windowStateManager.hasPendingConfigs {
+            // If this is an additional window (not the first), pop and use the next config directly
+            // The first window shows the restore prompt, additional windows auto-restore
+            if windowStateManager.windowConfigs.isEmpty {
+                // First window - show restore prompt
+                showRestorePrompt = true
+            } else {
+                // Additional window - pop the next pending config
+                if let config = windowStateManager.popNextPendingConfig() {
+                    registerWindow(config: config)
+                } else {
+                    registerWindow()
+                }
+            }
+        } else if windowStateManager.hasRestoredState && windowStateManager.windowConfigs.isEmpty {
+            // First launch with saved state - show restore prompt
             showRestorePrompt = true
         } else {
-            // No saved state - save the initial state
-            saveState()
+            // No saved state or already restored - register new window
+            registerWindow()
         }
     }
 
-    private func restoreState() {
-        guard let state = stateManager.savedState else { return }
-
-        // Restore grid config
-        gridConfig = state.gridConfig
+    private func registerWindow(config: WindowConfig? = nil) {
+        let windowConfig = windowStateManager.registerWindow(config: config)
+        windowId = windowConfig.id
+        gridConfig = windowConfig.gridConfig
 
         // Restore pane attachments
-        for (paneIdStr, tmuxSessionName) in state.paneAttachments {
+        for (paneIdStr, tmuxSessionName) in windowConfig.paneAttachments {
             guard let paneId = Int(paneIdStr) else { continue }
-
-            // Find the session by tmux session name
             if let session = sessionManager.sessions.first(where: { $0.tmuxSession == tmuxSessionName }) {
                 paneManager.attach(session: session, to: paneId)
             }
         }
     }
 
+    private func restoreWindowState() {
+        // Pop the first pending config for this window
+        if let config = windowStateManager.popNextPendingConfig() {
+            registerWindow(config: config)
+        } else {
+            registerWindow()
+        }
+
+        // Notify AppDelegate to open additional windows for remaining pending configs
+        if windowStateManager.hasPendingConfigs {
+            NotificationCenter.default.post(name: .restoreComplete, object: nil)
+        }
+    }
+
     private func saveState() {
-        guard isReady else { return }
-        stateManager.saveState(gridConfig: gridConfig, paneManager: paneManager)
+        guard isReady, let id = windowId else { return }
+        windowStateManager.updateWindow(id: id, gridConfig: gridConfig, paneManager: paneManager)
     }
 
     private func attachToFirstEmptyPane(_ session: NexusSession) {
@@ -243,5 +273,6 @@ struct GridStatusBarView: View {
 
 #Preview {
     ContentView()
+        .environment(AppState.shared)
         .frame(width: 1000, height: 600)
 }

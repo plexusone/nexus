@@ -3,11 +3,17 @@ import SwiftUI
 @main
 struct NexusApp: App {
     @NSApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
+    @Environment(\.openWindow) private var openWindow
+    private let appState = AppState.shared
 
     var body: some Scene {
-        WindowGroup {
+        WindowGroup(id: "main") {
             ContentView()
+                .environment(appState)
                 .frame(minWidth: 600, minHeight: 400)
+                .onReceive(NotificationCenter.default.publisher(for: .newWindow)) { _ in
+                    openWindow(id: "main")
+                }
         }
         .windowStyle(.titleBar)
         .windowToolbarStyle(.unified)
@@ -71,4 +77,5 @@ extension Notification.Name {
     static let detachSession = Notification.Name("com.plexusone.nexus.detachSession")
     static let nextPane = Notification.Name("com.plexusone.nexus.nextPane")
     static let previousPane = Notification.Name("com.plexusone.nexus.previousPane")
+    static let restoreComplete = Notification.Name("com.plexusone.nexus.restoreComplete")
 }

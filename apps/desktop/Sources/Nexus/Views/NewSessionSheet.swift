@@ -3,6 +3,7 @@ import SwiftUI
 /// Sheet for creating a new tmux session
 struct NewSessionSheet: View {
     @Environment(\.dismiss) private var dismiss
+    @Environment(AppState.self) private var appState
 
     @State private var sessionName: String = ""
     @State private var selectedAgentType: AgentType?
@@ -11,8 +12,11 @@ struct NewSessionSheet: View {
     @State private var isCreating: Bool = false
     @State private var errorMessage: String?
 
-    let sessionManager: SessionManager
     let onSessionCreated: (NexusSession) -> Void
+
+    private var sessionManager: SessionManager {
+        appState.sessionManager
+    }
 
     var body: some View {
         VStack(spacing: 0) {
@@ -125,7 +129,7 @@ struct NewSessionSheet: View {
 
 #Preview {
     NewSessionSheet(
-        sessionManager: SessionManager(),
         onSessionCreated: { _ in }
     )
+    .environment(AppState.shared)
 }

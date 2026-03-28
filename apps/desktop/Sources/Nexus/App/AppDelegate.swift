@@ -13,6 +13,15 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
         // Check for tmux installation
         checkTmuxInstallation()
+
+        // Listen for restore completion to open additional windows
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(handleRestoreComplete),
+            name: .restoreComplete,
+            object: nil
+        )
+
     }
 
     func applicationWillTerminate(_ notification: Notification) {
@@ -28,6 +37,26 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     func applicationSupportsSecureRestorableState(_ app: NSApplication) -> Bool {
         return true
+    }
+
+    // MARK: - Multi-Window Restoration
+
+    @objc private func handleRestoreComplete(_ notification: Notification) {
+        restoreAdditionalWindows()
+    }
+
+    private func restoreAdditionalWindows() {
+        let windowStateManager = AppState.shared.windowStateManager
+
+        // Open additional windows for remaining pending configs
+        while windowStateManager.hasPendingConfigs {
+            // Post notification to open new window
+            // Each new ContentView will pop the next pending config
+            NotificationCenter.default.post(name: .newWindow, object: nil)
+
+            // Small delay to allow window creation
+            Thread.sleep(forTimeInterval: 0.1)
+        }
     }
 
     // MARK: - Private Methods
