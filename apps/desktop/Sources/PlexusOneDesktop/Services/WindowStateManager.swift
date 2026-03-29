@@ -6,6 +6,7 @@ import Observation
 final class WindowStateManager {
     private let stateDirectory: URL
     private let stateFileURL: URL
+    private let fileSystem: any FileSystemAccessing
 
     /// All registered windows
     private(set) var windowConfigs: [UUID: WindowConfig] = [:]
@@ -16,10 +17,14 @@ final class WindowStateManager {
     /// Loaded window configs (before restoration)
     private(set) var pendingRestoreConfigs: [WindowConfig] = []
 
-    init() {
-        let homeDir = FileManager.default.homeDirectoryForCurrentUser
-        self.stateDirectory = homeDir.appendingPathComponent(".plexusone")
-        self.stateFileURL = stateDirectory.appendingPathComponent("state.json")
+    init(
+        fileSystem: any FileSystemAccessing = DefaultFileSystemAccessing(),
+        stateDirectory: URL? = nil
+    ) {
+        self.fileSystem = fileSystem
+        let homeDir = stateDirectory ?? fileSystem.homeDirectoryForCurrentUser.appendingPathComponent(".plexusone")
+        self.stateDirectory = homeDir
+        self.stateFileURL = homeDir.appendingPathComponent("state.json")
 
         loadState()
     }
@@ -85,13 +90,13 @@ final class WindowStateManager {
     // MARK: - Persistence
 
     private func loadState() {
-        guard FileManager.default.fileExists(atPath: stateFileURL.path) else {
+        guard fileSystem.fileExists(atPath: stateFileURL.path) else {
             hasRestoredState = false
             return
         }
 
         do {
-            let data = try Data(contentsOf: stateFileURL)
+            let data = try fileSystem.contents(at: stateFileURL)
 
             // Try to decode as v2 (multi-window) format first
             let decoder = JSONDecoder()
@@ -127,7 +132,7 @@ final class WindowStateManager {
 
         do {
             // Ensure directory exists
-            try FileManager.default.createDirectory(
+            try fileSystem.createDirectory(
                 at: stateDirectory,
                 withIntermediateDirectories: true
             )
@@ -137,7 +142,7 @@ final class WindowStateManager {
             encoder.outputFormatting = [.prettyPrinted, .sortedKeys]
 
             let data = try encoder.encode(state)
-            try data.write(to: stateFileURL, options: .atomic)
+            try fileSystem.write(data, to: stateFileURL, options: .atomic)
         } catch {
             print("Failed to save window state: \(error)")
         }
@@ -146,8 +151,8 @@ final class WindowStateManager {
     /// Clear all saved state
     func clearState() {
         do {
-            if FileManager.default.fileExists(atPath: stateFileURL.path) {
-                try FileManager.default.removeItem(at: stateFileURL)
+            if fileSystem.fileExists(atPath: stateFileURL.path) {
+                try fileSystem.removeItem(at: stateFileURL)
             }
             windowConfigs = [:]
             pendingRestoreConfigs = []

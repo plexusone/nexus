@@ -12,11 +12,23 @@ final class SessionManager {
     private let refreshInterval: TimeInterval = 5.0
 
     // Status thresholds (in seconds)
-    private let idleThreshold: TimeInterval = 30
-    private let stuckThreshold: TimeInterval = 120
+    let idleThreshold: TimeInterval = 30
+    let stuckThreshold: TimeInterval = 120
 
-    init() {
-        // Don't auto-start - let the view trigger the first refresh
+    // Injected dependencies for testing
+    private let commandExecutor: any CommandExecuting
+    private let tmuxPaths: [String]
+
+    init(
+        commandExecutor: any CommandExecuting = ProcessCommandExecutor(),
+        tmuxPaths: [String] = [
+            "/usr/local/bin/tmux",   // Homebrew Intel
+            "/opt/homebrew/bin/tmux", // Homebrew Apple Silicon
+            "/usr/bin/tmux"           // System
+        ]
+    ) {
+        self.commandExecutor = commandExecutor
+        self.tmuxPaths = tmuxPaths
     }
 
     /// Start periodic refresh (call from view's onAppear)
@@ -97,7 +109,7 @@ final class SessionManager {
     /// Check if tmux is available
     func checkTmuxAvailable() async -> Bool {
         do {
-            let result = try await runCommand("/usr/bin/which", arguments: ["tmux"])
+            let result = try await commandExecutor.execute("/usr/bin/which", arguments: ["tmux"])
             return result.success && !result.stdout.isEmpty
         } catch {
             return false
@@ -139,7 +151,40 @@ final class SessionManager {
             throw SessionManagerError.listFailed(result.stderr)
         }
 
-        let lines = result.stdout.split(separator: "\n")
+        return parseSessionOutput(result.stdout)
+    }
+
+    /// Determine session status based on elapsed time since last activity
+    /// Made internal (not private) for direct testing
+    func determineStatus(lastActivity: Date, isAttached: Bool) -> SessionStatus {
+        let elapsed = Date().timeIntervalSince(lastActivity)
+
+        if elapsed < idleThreshold {
+            return .running
+        } else if elapsed < stuckThreshold {
+            return .idle
+        } else {
+            return .stuck
+        }
+    }
+
+    /// Sanitize session name for tmux compatibility
+    /// Made internal (not private) for direct testing
+    func sanitizeSessionName(_ name: String) -> String {
+        // tmux session names can't contain periods or colons
+        name.replacingOccurrences(of: ".", with: "-")
+            .replacingOccurrences(of: ":", with: "-")
+            .trimmingCharacters(in: .whitespacesAndNewlines)
+    }
+
+    /// Parse tmux list-sessions output into Session objects
+    /// Made internal (not private) for direct testing
+    /// - Parameters:
+    ///   - output: Raw stdout from tmux list-sessions -F "#{session_name}|#{session_activity}|#{session_attached}"
+    ///   - referenceDate: Date to use for status calculation (allows deterministic testing)
+    /// - Returns: Array of parsed Session objects, sorted by name
+    func parseSessionOutput(_ output: String, referenceDate: Date = Date()) -> [Session] {
+        let lines = output.split(separator: "\n")
         var sessions: [Session] = []
 
         for line in lines {
@@ -147,7 +192,7 @@ final class SessionManager {
             guard parts.count >= 3 else { continue }
 
             let name = String(parts[0])
-            let activityTimestamp = TimeInterval(parts[1]) ?? Date().timeIntervalSince1970
+            let activityTimestamp = TimeInterval(parts[1]) ?? referenceDate.timeIntervalSince1970
             let attachedCount = Int(parts[2]) ?? 0
 
             let lastActivity = Date(timeIntervalSince1970: activityTimestamp)
@@ -165,71 +210,16 @@ final class SessionManager {
         return sessions.sorted { $0.name < $1.name }
     }
 
-    private func determineStatus(lastActivity: Date, isAttached: Bool) -> SessionStatus {
-        let elapsed = Date().timeIntervalSince(lastActivity)
-
-        if elapsed < idleThreshold {
-            return .running
-        } else if elapsed < stuckThreshold {
-            return .idle
-        } else {
-            return .stuck
-        }
-    }
-
-    private func sanitizeSessionName(_ name: String) -> String {
-        // tmux session names can't contain periods or colons
-        name.replacingOccurrences(of: ".", with: "-")
-            .replacingOccurrences(of: ":", with: "-")
-            .trimmingCharacters(in: .whitespacesAndNewlines)
-    }
-
     private func runTmux(_ arguments: [String]) async throws -> CommandResult {
-        // Try common tmux locations
-        let tmuxPaths = [
-            "/usr/local/bin/tmux",  // Homebrew Intel
-            "/opt/homebrew/bin/tmux",  // Homebrew Apple Silicon
-            "/usr/bin/tmux"  // System
-        ]
-
+        // Try configured tmux locations
         for path in tmuxPaths {
             if FileManager.default.fileExists(atPath: path) {
-                return try await runCommand(path, arguments: arguments)
+                return try await commandExecutor.execute(path, arguments: arguments)
             }
         }
 
         // Fallback to PATH lookup
-        return try await runCommand("/usr/bin/env", arguments: ["tmux"] + arguments)
-    }
-
-    private func runCommand(_ path: String, arguments: [String]) async throws -> CommandResult {
-        try await withCheckedThrowingContinuation { continuation in
-            let process = Process()
-            process.executableURL = URL(fileURLWithPath: path)
-            process.arguments = arguments
-
-            let stdoutPipe = Pipe()
-            let stderrPipe = Pipe()
-            process.standardOutput = stdoutPipe
-            process.standardError = stderrPipe
-
-            do {
-                try process.run()
-                process.waitUntilExit()
-
-                let stdoutData = stdoutPipe.fileHandleForReading.readDataToEndOfFile()
-                let stderrData = stderrPipe.fileHandleForReading.readDataToEndOfFile()
-
-                let result = CommandResult(
-                    exitCode: process.terminationStatus,
-                    stdout: String(data: stdoutData, encoding: .utf8) ?? "",
-                    stderr: String(data: stderrData, encoding: .utf8) ?? ""
-                )
-                continuation.resume(returning: result)
-            } catch {
-                continuation.resume(throwing: SessionManagerError.commandFailed(error.localizedDescription))
-            }
-        }
+        return try await commandExecutor.execute("/usr/bin/env", arguments: ["tmux"] + arguments)
     }
 }
 
