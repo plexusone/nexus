@@ -1,0 +1,20 @@
+name: Desktop CI
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'apps/desktop/**'
+      - '.github/workflows/desktop.yml'
+  pull_request:
+    branches: [main]
+    paths:
+      - 'apps/desktop/**'
+      - '.github/workflows/desktop.yml'
+
+jobs:
+  swift-ci:
+    name: Swift CI
+    uses: plexusone/.github/.github/workflows/swift-ci.yaml@main
+    with:
+      working-directory: apps/desktop
