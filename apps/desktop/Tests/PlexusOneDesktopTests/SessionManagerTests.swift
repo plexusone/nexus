@@ -1,5 +1,5 @@
 import XCTest
-@testable import Nexus
+@testable import PlexusOneDesktop
 
 final class SessionManagerTests: XCTestCase {
 
@@ -10,8 +10,8 @@ final class SessionManagerTests: XCTestCase {
         XCTAssertEqual(SessionStatus.detached.displayName, "Detached")
     }
 
-    func testNexusSessionInitialization() {
-        let session = NexusSession(name: "test-session")
+    func testSessionInitialization() {
+        let session = Session(name: "test-session")
 
         XCTAssertEqual(session.name, "test-session")
         XCTAssertEqual(session.tmuxSession, "test-session")
@@ -19,8 +19,8 @@ final class SessionManagerTests: XCTestCase {
         XCTAssertNil(session.agentType)
     }
 
-    func testNexusSessionWithCustomTmuxSession() {
-        let session = NexusSession(
+    func testSessionWithCustomTmuxSession() {
+        let session = Session(
             name: "My Session",
             tmuxSession: "my-tmux-session",
             agentType: .claude

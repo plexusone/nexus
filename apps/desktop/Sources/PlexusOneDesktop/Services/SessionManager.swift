@@ -4,7 +4,7 @@ import Observation
 /// Manages tmux sessions: listing, creating, attaching, and monitoring
 @Observable
 final class SessionManager {
-    private(set) var sessions: [NexusSession] = []
+    private(set) var sessions: [Session] = []
     private(set) var isLoading = false
     private(set) var error: SessionManagerError?
 
@@ -48,7 +48,7 @@ final class SessionManager {
     }
 
     /// Create a new tmux session
-    func createSession(name: String, command: String? = nil) async throws -> NexusSession {
+    func createSession(name: String, command: String? = nil) async throws -> Session {
         let sanitizedName = sanitizeSessionName(name)
 
         // Check if session already exists
@@ -74,7 +74,7 @@ final class SessionManager {
     }
 
     /// Kill a tmux session
-    func killSession(_ session: NexusSession) async throws {
+    func killSession(_ session: Session) async throws {
         let result = try await runTmux(["kill-session", "-t", session.tmuxSession])
         if !result.success {
             throw SessionManagerError.killFailed(result.stderr)
@@ -84,7 +84,7 @@ final class SessionManager {
     }
 
     /// Rename a tmux session
-    func renameSession(_ session: NexusSession, to newName: String) async throws {
+    func renameSession(_ session: Session, to newName: String) async throws {
         let sanitizedName = sanitizeSessionName(newName)
         let result = try await runTmux(["rename-session", "-t", session.tmuxSession, sanitizedName])
         if !result.success {
@@ -115,7 +115,7 @@ final class SessionManager {
         }
     }
 
-    private func listTmuxSessions() async throws -> [NexusSession] {
+    private func listTmuxSessions() async throws -> [Session] {
         // Check if tmux server is running
         let hasServer = try await runTmux(["list-sessions", "-F", ""])
         if !hasServer.success {
@@ -140,7 +140,7 @@ final class SessionManager {
         }
 
         let lines = result.stdout.split(separator: "\n")
-        var sessions: [NexusSession] = []
+        var sessions: [Session] = []
 
         for line in lines {
             let parts = line.split(separator: "|", omittingEmptySubsequences: false)
@@ -153,7 +153,7 @@ final class SessionManager {
             let lastActivity = Date(timeIntervalSince1970: activityTimestamp)
             let status = determineStatus(lastActivity: lastActivity, isAttached: attachedCount > 0)
 
-            let session = NexusSession(
+            let session = Session(
                 name: name,
                 tmuxSession: name,
                 status: status,

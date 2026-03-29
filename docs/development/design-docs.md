@@ -1,6 +1,6 @@
 # Design Documents
 
-Index of design documents for Nexus features and architecture.
+Index of design documents for PlexusOne Desktop features and architecture.
 
 ## Current Documents
 

@@ -1,6 +1,6 @@
 # Contributing
 
-Guidelines for contributing to Nexus.
+Guidelines for contributing to PlexusOne Desktop.
 
 ## Getting Started
 
@@ -15,8 +15,8 @@ Guidelines for contributing to Nexus.
 ### Clone the Repository
 
 ```bash
-git clone https://github.com/plexusone/nexus.git
-cd nexus
+git clone https://github.com/plexusone/plexusone-apps.git
+cd plexusone-apps
 ```
 
 ### Build All Components

@@ -2,11 +2,11 @@ import SwiftUI
 import AppKit
 import SwiftTerm
 
-/// Container view that hosts NexusTerminalView and forwards scroll events
+/// Container view that hosts AppTerminalView and forwards scroll events
 class TerminalContainerView: NSView {
-    let terminalView: NexusTerminalView
+    let terminalView: AppTerminalView
 
-    init(terminalView: NexusTerminalView) {
+    init(terminalView: AppTerminalView) {
         self.terminalView = terminalView
         super.init(frame: .zero)
 
@@ -37,17 +37,17 @@ class TerminalContainerView: NSView {
     }
 }
 
-/// SwiftUI wrapper for NexusTerminalView using NSViewRepresentable
+/// SwiftUI wrapper for AppTerminalView using NSViewRepresentable
 /// This approach follows SwiftTerm's own iOS SwiftUI implementation pattern
-struct TerminalViewRepresentable: NSViewRepresentable {
+struct AppTerminalViewRepresentable: NSViewRepresentable {
     typealias NSViewType = TerminalContainerView
 
-    @Binding var attachedSession: NexusSession?
+    @Binding var attachedSession: Session?
     let sessionManager: SessionManager
     var onSessionEnded: (() -> Void)?
 
     func makeNSView(context: Context) -> TerminalContainerView {
-        let terminalView = NexusTerminalView(frame: .zero)
+        let terminalView = AppTerminalView(frame: .zero)
         terminalView.processDelegate = context.coordinator
         context.coordinator.terminalView = terminalView
 
@@ -85,7 +85,7 @@ struct TerminalViewRepresentable: NSViewRepresentable {
         Coordinator(self)
     }
 
-    private func configureAppearance(_ view: NexusTerminalView) {
+    private func configureAppearance(_ view: AppTerminalView) {
         // Use system monospace font
         let fontSize: CGFloat = 13
         let font = NSFont.monospacedSystemFont(ofSize: fontSize, weight: .regular)
@@ -106,11 +106,11 @@ struct TerminalViewRepresentable: NSViewRepresentable {
     // MARK: - Coordinator
 
     class Coordinator: NSObject, LocalProcessTerminalViewDelegate {
-        var parent: TerminalViewRepresentable
-        weak var terminalView: NexusTerminalView?
+        var parent: AppTerminalViewRepresentable
+        weak var terminalView: AppTerminalView?
         var scrollMonitor: Any?
 
-        init(_ parent: TerminalViewRepresentable) {
+        init(_ parent: AppTerminalViewRepresentable) {
             self.parent = parent
         }
 

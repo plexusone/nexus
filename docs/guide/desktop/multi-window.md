@@ -1,12 +1,12 @@
 # Multi-Window Support
 
-Nexus supports multiple windows, each with its own independent grid layout while sharing the same session pool.
+PlexusOne Desktop supports multiple windows, each with its own independent grid layout while sharing the same session pool.
 
 ## Overview
 
 With multi-window support, you can:
 
-- Open multiple Nexus windows
+- Open multiple PlexusOne Desktop windows
 - Configure different grid layouts per window (e.g., 3×2 on one monitor, 2×1 on another)
 - View the same sessions across windows
 - Have each window persist its layout independently
@@ -145,7 +145,7 @@ Existing v1 state files (single-window format) are automatically migrated to v2 
 
 Use multiple windows across monitors:
 
-1. Open Nexus (Window 1 appears)
+1. Open PlexusOne Desktop (Window 1 appears)
 2. Press `Cmd+Shift+N` to open Window 2
 3. Drag Window 2 to your second monitor
 4. Configure each window's layout for its monitor size

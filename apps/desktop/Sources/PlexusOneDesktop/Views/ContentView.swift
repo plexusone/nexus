@@ -1,6 +1,6 @@
 import SwiftUI
 
-/// Main content view for a Nexus window
+/// Main content view for a PlexusOne Desktop window
 struct ContentView: View {
     @Environment(AppState.self) private var appState
     @State private var paneManager = PaneManager()
@@ -163,7 +163,7 @@ struct ContentView: View {
         }
     }
 
-    private func setupAsPopOutWindow(with session: NexusSession) {
+    private func setupAsPopOutWindow(with session: Session) {
         // Create a 1×1 window config with the session attached
         let popOutConfig = WindowConfig(
             gridConfig: GridConfig(columns: 1, rows: 1),
@@ -205,7 +205,7 @@ struct ContentView: View {
         windowStateManager.updateWindow(id: id, gridConfig: gridConfig, paneManager: paneManager)
     }
 
-    private func attachToFirstEmptyPane(_ session: NexusSession) {
+    private func attachToFirstEmptyPane(_ session: Session) {
         // Find first empty pane and attach
         for paneId in 1...gridConfig.paneCount {
             if paneManager.session(for: paneId) == nil {
@@ -220,7 +220,7 @@ struct ContentView: View {
 
 /// Status bar adapted for grid layout
 struct GridStatusBarView: View {
-    let sessions: [NexusSession]
+    let sessions: [Session]
     let paneManager: PaneManager
     let gridConfig: GridConfig
     let onCreateNew: () -> Void

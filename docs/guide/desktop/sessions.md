@@ -1,6 +1,6 @@
 # Session Management
 
-Sessions are tmux sessions that run your AI agents. Nexus helps you manage them visually.
+Sessions are tmux sessions that run your AI agents. PlexusOne Desktop helps you manage them visually.
 
 ## Creating Sessions
 
@@ -17,7 +17,7 @@ tmux new-session -d -s my-agent "kiro"
 tmux new-session -d -s scratch
 ```
 
-### From Nexus
+### From PlexusOne Desktop
 
 1. Click the **+** button (toolbar or status bar)
 2. Fill in the New Session form:
@@ -51,7 +51,7 @@ Click the **✕** button in the pane header to detach.
 
 ### Status Detection
 
-Nexus monitors sessions and infers status:
+PlexusOne Desktop monitors sessions and infers status:
 
 | Status | Indicators |
 |--------|------------|
@@ -69,7 +69,7 @@ The status bar shows all pane assignments:
 
 ## Listing Sessions
 
-### In Nexus
+### In PlexusOne Desktop
 
 - Click any session dropdown to see available sessions
 - Status bar shows session count
@@ -96,7 +96,7 @@ tmux kill-session -t coder-1
 tmux kill-server
 ```
 
-### From Nexus
+### From PlexusOne Desktop
 
 Currently, sessions must be killed from the terminal. Future versions will add in-app session management.
 
@@ -146,7 +146,7 @@ docs-update
 For agents that run for hours:
 
 - Keep sessions attached for visibility
-- Use larger scrollback (Nexus has 10,000 lines)
+- Use larger scrollback (PlexusOne Desktop has 10,000 lines)
 - Monitor status colors for issues
 - Detach temporarily if needed for other work
 
@@ -167,10 +167,10 @@ The process inside the session exited. Options:
 
 ### Multiple tmux Servers
 
-Nexus connects to the default tmux server. If using named servers:
+PlexusOne Desktop connects to the default tmux server. If using named servers:
 
 ```bash
-# This won't appear in Nexus
+# This won't appear in PlexusOne Desktop
 tmux -L myserver new-session -s test
 
 # Use default server instead

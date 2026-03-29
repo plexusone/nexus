@@ -2,9 +2,9 @@ import SwiftUI
 
 /// Bottom status bar showing all sessions with quick-attach functionality
 struct StatusBarView: View {
-    let sessions: [NexusSession]
-    let currentSession: NexusSession?
-    let onSelectSession: (NexusSession) -> Void
+    let sessions: [Session]
+    let currentSession: Session?
+    let onSelectSession: (Session) -> Void
     let onCreateNew: () -> Void
 
     var body: some View {
@@ -51,7 +51,7 @@ struct StatusBarView: View {
 
 /// Individual session pill in the status bar
 struct SessionPillView: View {
-    let session: NexusSession
+    let session: Session
     let isSelected: Bool
     let onTap: () -> Void
 
@@ -120,12 +120,12 @@ extension Date {
         Spacer()
         StatusBarView(
             sessions: [
-                NexusSession(name: "coder-1", status: .running),
-                NexusSession(name: "coder-2", status: .idle),
-                NexusSession(name: "reviewer", status: .stuck),
-                NexusSession(name: "planner", status: .running)
+                Session(name: "coder-1", status: .running),
+                Session(name: "coder-2", status: .idle),
+                Session(name: "reviewer", status: .stuck),
+                Session(name: "planner", status: .running)
             ],
-            currentSession: NexusSession(name: "coder-1", status: .running),
+            currentSession: Session(name: "coder-1", status: .running),
             onSelectSession: { _ in },
             onCreateNew: { }
         )

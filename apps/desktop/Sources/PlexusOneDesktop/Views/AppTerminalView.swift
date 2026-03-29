@@ -3,7 +3,7 @@ import SwiftTerm
 
 /// Custom LocalProcessTerminalView subclass for SwiftUI integration
 /// Handles explicit size tracking and layout updates following SwiftTerm's iOS pattern
-class NexusTerminalView: LocalProcessTerminalView {
+class AppTerminalView: LocalProcessTerminalView {
     private var lastAppliedSize: CGSize = .zero
     private var currentSessionId: UUID?
 
@@ -62,7 +62,7 @@ class NexusTerminalView: LocalProcessTerminalView {
         currentSessionId
     }
 
-    func attach(to session: NexusSession) {
+    func attach(to session: Session) {
         currentSessionId = session.id
 
         let (tmuxPath, baseArgs) = findTmuxExecutable()

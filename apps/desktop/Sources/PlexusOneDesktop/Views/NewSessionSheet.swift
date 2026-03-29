@@ -12,7 +12,7 @@ struct NewSessionSheet: View {
     @State private var isCreating: Bool = false
     @State private var errorMessage: String?
 
-    let onSessionCreated: (NexusSession) -> Void
+    let onSessionCreated: (Session) -> Void
 
     private var sessionManager: SessionManager {
         appState.sessionManager

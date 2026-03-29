@@ -1,5 +1,5 @@
 import XCTest
-@testable import Nexus
+@testable import PlexusOneDesktop
 
 final class WindowStateTests: XCTestCase {
 
@@ -183,9 +183,9 @@ final class WindowStateTests: XCTestCase {
         XCTAssertEqual(state.windows[0].gridRows, 2)
     }
 
-    // MARK: - NexusState (v1) Migration Tests
+    // MARK: - LegacyState (v1) Migration Tests
 
-    func testNexusStateLegacyDecoding() throws {
+    func testLegacyStateLegacyDecoding() throws {
         let json = """
         {
             "gridColumns": 3,
@@ -198,7 +198,7 @@ final class WindowStateTests: XCTestCase {
 
         let decoder = JSONDecoder()
         decoder.dateDecodingStrategy = .iso8601
-        let legacyState = try decoder.decode(NexusState.self, from: json.data(using: .utf8)!)
+        let legacyState = try decoder.decode(LegacyState.self, from: json.data(using: .utf8)!)
 
         XCTAssertEqual(legacyState.gridColumns, 3)
         XCTAssertEqual(legacyState.gridRows, 2)

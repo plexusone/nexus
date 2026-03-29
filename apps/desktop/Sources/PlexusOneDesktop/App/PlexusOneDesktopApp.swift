@@ -1,7 +1,7 @@
 import SwiftUI
 
 @main
-struct NexusApp: App {
+struct PlexusOneDesktopApp: App {
     @NSApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
     @Environment(\.openWindow) private var openWindow
     private let appState = AppState.shared
@@ -15,7 +15,7 @@ struct NexusApp: App {
                     openWindow(id: "main")
                 }
                 .onReceive(NotificationCenter.default.publisher(for: .popOutSession)) { notification in
-                    if let session = notification.userInfo?["session"] as? NexusSession {
+                    if let session = notification.userInfo?["session"] as? Session {
                         appState.pendingPopOutSession = session
                         openWindow(id: "main")
                     }
@@ -77,12 +77,12 @@ struct NexusApp: App {
 // MARK: - Notification Names
 
 extension Notification.Name {
-    static let newSession = Notification.Name("com.plexusone.nexus.newSession")
-    static let newWindow = Notification.Name("com.plexusone.nexus.newWindow")
-    static let popOutSession = Notification.Name("com.plexusone.nexus.popOutSession")
-    static let attachSession = Notification.Name("com.plexusone.nexus.attachSession")
-    static let detachSession = Notification.Name("com.plexusone.nexus.detachSession")
-    static let nextPane = Notification.Name("com.plexusone.nexus.nextPane")
-    static let previousPane = Notification.Name("com.plexusone.nexus.previousPane")
-    static let restoreComplete = Notification.Name("com.plexusone.nexus.restoreComplete")
+    static let newSession = Notification.Name("com.plexusone.desktop.newSession")
+    static let newWindow = Notification.Name("com.plexusone.desktop.newWindow")
+    static let popOutSession = Notification.Name("com.plexusone.desktop.popOutSession")
+    static let attachSession = Notification.Name("com.plexusone.desktop.attachSession")
+    static let detachSession = Notification.Name("com.plexusone.desktop.detachSession")
+    static let nextPane = Notification.Name("com.plexusone.desktop.nextPane")
+    static let previousPane = Notification.Name("com.plexusone.desktop.previousPane")
+    static let restoreComplete = Notification.Name("com.plexusone.desktop.restoreComplete")
 }

@@ -1,6 +1,6 @@
 # Quick Start
 
-Get up and running with Nexus in 5 minutes.
+Get up and running with PlexusOne Desktop in 5 minutes.
 
 ## Prerequisites
 
@@ -27,13 +27,13 @@ tmux list-sessions
 # reviewer: 1 windows (created ...)
 ```
 
-## Step 2: Launch Nexus
+## Step 2: Launch PlexusOne Desktop
 
-Open the Nexus app:
+Open the PlexusOne Desktop app:
 
 ```bash
-open /Applications/Nexus.app
-# Or from source: open apps/desktop/Nexus.app
+open "/Applications/PlexusOne Desktop.app"
+# Or from source: open "apps/desktop/PlexusOne Desktop.app"
 ```
 
 You'll see the main window with an empty 2×1 grid layout.
@@ -64,7 +64,7 @@ Now you can:
 
 ## Session State
 
-When you quit Nexus, your layout and pane assignments are saved.
+When you quit PlexusOne Desktop, your layout and pane assignments are saved.
 
 On next launch, you'll be prompted:
 
@@ -95,6 +95,6 @@ To monitor agents from your phone:
    # 192.168.1.100
    ```
 
-3. On your phone, open Nexus Mobile and connect to `192.168.1.100:9600`
+3. On your phone, open PlexusOne Mobile and connect to `192.168.1.100:9600`
 
 See the [Mobile Guide](../guide/mobile/overview.md) for details.

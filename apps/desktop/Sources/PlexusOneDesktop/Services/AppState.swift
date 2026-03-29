@@ -17,7 +17,7 @@ final class AppState {
     private(set) var isInitialized = false
 
     /// Pending session to attach in a new pop-out window
-    var pendingPopOutSession: NexusSession?
+    var pendingPopOutSession: Session?
 
     private init() {
         self.sessionManager = SessionManager()

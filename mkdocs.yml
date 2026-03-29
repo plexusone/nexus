@@ -1,9 +1,9 @@
-site_name: PlexusOne Nexus
+site_name: PlexusOne Desktop
 site_description: Multi-agent orchestration platform for AI CLI tools
-site_url: https://plexusone.github.io/nexus/
+site_url: https://plexusone.github.io/plexusone-apps/
 
-repo_name: plexusone/nexus
-repo_url: https://github.com/plexusone/nexus
+repo_name: plexusone/plexusone-apps
+repo_url: https://github.com/plexusone/plexusone-apps
 
 theme:
   name: material
@@ -53,6 +53,7 @@ nav:
       - Overview: guide/desktop/overview.md
       - Grid Layout: guide/desktop/grid-layout.md
       - Session Management: guide/desktop/sessions.md
+      - Multi-Window: guide/desktop/multi-window.md
       - Keyboard Shortcuts: guide/desktop/shortcuts.md
     - Mobile App:
       - Overview: guide/mobile/overview.md
@@ -72,6 +73,6 @@ nav:
 extra:
   social:
     - icon: fontawesome/brands/github
-      link: https://github.com/plexusone/nexus
+      link: https://github.com/plexusone/plexusone-apps
 
 copyright: Copyright &copy; 2024 PlexusOne

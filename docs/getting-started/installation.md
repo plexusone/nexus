@@ -4,9 +4,9 @@
 
 ### Option 1: Download Release (Recommended)
 
-1. Download the latest release from [GitHub Releases](https://github.com/plexusone/nexus/releases)
-2. Unzip and drag `Nexus.app` to your Applications folder
-3. Open Nexus from Applications (you may need to right-click → Open the first time)
+1. Download the latest release from [GitHub Releases](https://github.com/plexusone/plexusone-apps/releases)
+2. Unzip and drag `PlexusOne Desktop.app` to your Applications folder
+3. Open PlexusOne Desktop from Applications (you may need to right-click → Open the first time)
 
 ### Option 2: Build from Source
 
@@ -20,14 +20,14 @@
 
 ```bash
 # Clone the repository
-git clone https://github.com/plexusone/nexus.git
-cd nexus/apps/desktop
+git clone https://github.com/plexusone/plexusone-apps.git
+cd plexusone-apps/apps/desktop
 
 # Build the app
 swift build -c release
 
 # Copy to Applications (optional)
-cp -r .build/release/Nexus.app /Applications/
+cp -r "PlexusOne Desktop.app" /Applications/
 ```
 
 #### Run Without Installing
@@ -35,10 +35,10 @@ cp -r .build/release/Nexus.app /Applications/
 ```bash
 # Build and run directly
 swift build
-open Nexus.app
+open "PlexusOne Desktop.app"
 
 # Or run the binary
-.build/debug/Nexus
+.build/debug/PlexusOneDesktop
 ```
 
 ## TUI Parser (For Mobile Support)
@@ -48,7 +48,7 @@ The TUI Parser is a Go service that bridges tmux sessions to the mobile app over
 ### Build
 
 ```bash
-cd nexus/services/tuiparser
+cd plexusone-apps/services/tuiparser
 
 # Build the binary
 go build -o bin/tuiparser ./cmd/tuiparser
@@ -78,7 +78,7 @@ Open http://localhost:9600 in your browser to see the debug console.
 For now, build from source:
 
 ```bash
-cd nexus/apps/mobile
+cd plexusone-apps/apps/mobile
 flutter pub get
 flutter run --device-id <your-iphone-id>
 ```
@@ -91,7 +91,7 @@ flutter run --device-id <your-iphone-id>
 For now, build from source:
 
 ```bash
-cd nexus/apps/mobile
+cd plexusone-apps/apps/mobile
 flutter pub get
 flutter build apk --release
 ```
@@ -102,7 +102,7 @@ Install the APK from `build/app/outputs/flutter-apk/app-release.apk`.
 
 ### Desktop App
 
-1. Open Nexus
+1. Open PlexusOne Desktop
 2. You should see the main window with "Loading..." then an empty 2×1 grid
 3. Create a test tmux session:
    ```bash

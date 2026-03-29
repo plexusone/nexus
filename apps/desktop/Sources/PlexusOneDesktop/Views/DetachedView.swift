@@ -2,8 +2,8 @@ import SwiftUI
 
 /// Placeholder view shown when no session is attached to the pane
 struct DetachedView: View {
-    let sessions: [NexusSession]
-    let onSelectSession: (NexusSession) -> Void
+    let sessions: [Session]
+    let onSelectSession: (Session) -> Void
     let onCreateNew: () -> Void
 
     var body: some View {
@@ -83,9 +83,9 @@ struct DetachedView: View {
 #Preview("With Sessions") {
     DetachedView(
         sessions: [
-            NexusSession(name: "coder-1", status: .running),
-            NexusSession(name: "reviewer", status: .idle),
-            NexusSession(name: "planner", status: .stuck)
+            Session(name: "coder-1", status: .running),
+            Session(name: "reviewer", status: .idle),
+            Session(name: "planner", status: .stuck)
         ],
         onSelectSession: { _ in },
         onCreateNew: { }

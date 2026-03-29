@@ -3,9 +3,9 @@ import SwiftUI
 /// A single pane with a compact session dropdown header and terminal view
 struct PaneView: View {
     let paneId: Int
-    let sessions: [NexusSession]
+    let sessions: [Session]
     let sessionManager: SessionManager
-    @Binding var attachedSession: NexusSession?
+    @Binding var attachedSession: Session?
     let onRequestNewSession: () -> Void
 
     @State private var isHovering = false
@@ -38,7 +38,7 @@ struct PaneView: View {
 
             // Terminal or detached placeholder
             if attachedSession != nil {
-                TerminalViewRepresentable(
+                AppTerminalViewRepresentable(
                     attachedSession: $attachedSession,
                     sessionManager: sessionManager,
                     onSessionEnded: {
@@ -68,9 +68,9 @@ struct PaneView: View {
 /// Compact header bar for each pane
 struct PaneHeaderView: View {
     let paneId: Int
-    let sessions: [NexusSession]
-    let currentSession: NexusSession?
-    let onSelectSession: (NexusSession) -> Void
+    let sessions: [Session]
+    let currentSession: Session?
+    let onSelectSession: (Session) -> Void
     let onDetach: () -> Void
     let onPopOut: () -> Void
     let onNewSession: () -> Void
@@ -169,8 +169,8 @@ struct PaneHeaderView: View {
 
 /// Compact placeholder when pane has no session attached
 struct CompactDetachedView: View {
-    let sessions: [NexusSession]
-    let onSelectSession: (NexusSession) -> Void
+    let sessions: [Session]
+    let onSelectSession: (Session) -> Void
     let onNewSession: () -> Void
 
     var body: some View {
@@ -228,8 +228,8 @@ struct CompactDetachedView: View {
     PaneView(
         paneId: 1,
         sessions: [
-            NexusSession(name: "coder-1", status: .running),
-            NexusSession(name: "reviewer", status: .idle)
+            Session(name: "coder-1", status: .running),
+            Session(name: "reviewer", status: .idle)
         ],
         sessionManager: SessionManager(),
         attachedSession: .constant(nil),

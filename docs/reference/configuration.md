@@ -1,6 +1,6 @@
 # Configuration
 
-Configuration options for Nexus components.
+Configuration options for PlexusOne Desktop components.
 
 ## Desktop App
 
@@ -42,7 +42,7 @@ This file contains:
 
 ### Restore Behavior
 
-On startup, if a state file exists, Nexus prompts:
+On startup, if a state file exists, PlexusOne Desktop prompts:
 
 > "Restore previous session?"
 >
@@ -112,7 +112,7 @@ Server settings are stored locally on the device:
 
 ## tmux Configuration
 
-While Nexus works with default tmux settings, these options enhance the experience:
+While PlexusOne Desktop works with default tmux settings, these options enhance the experience:
 
 ### Recommended ~/.tmux.conf
 
@@ -143,7 +143,7 @@ tmux new-session -s claude-main
 tmux rename-session -t 0 claude-main
 ```
 
-Nexus displays session names in the pane headers.
+PlexusOne Desktop displays session names in the pane headers.
 
 ## File Locations
 
@@ -164,13 +164,13 @@ Nexus displays session names in the pane headers.
 
 ### Sensitive Data
 
-Nexus does not store:
+PlexusOne Desktop does not store:
 
 - Passwords or credentials
 - API keys
 - Session content/history
 
-Terminal content is streamed in real-time and not persisted by Nexus (tmux handles its own scrollback).
+Terminal content is streamed in real-time and not persisted by PlexusOne Desktop (tmux handles its own scrollback).
 
 ### Network Security
 

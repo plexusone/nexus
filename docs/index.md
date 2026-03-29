@@ -1,8 +1,8 @@
-# PlexusOne Nexus
+# PlexusOne Desktop
 
 **Multi-agent orchestration platform for AI CLI tools**
 
-Nexus is a terminal multiplexer designed specifically for managing multiple AI coding agents like [Claude Code](https://claude.ai/claude-code) and [Kiro CLI](https://kiro.dev). Monitor, control, and interact with your AI agents from a unified interface.
+PlexusOne Desktop is a terminal multiplexer designed specifically for managing multiple AI coding agents like [Claude Code](https://claude.ai/claude-code) and [Kiro CLI](https://kiro.dev). Monitor, control, and interact with your AI agents from a unified interface.
 
 ## Features
 
@@ -33,13 +33,13 @@ Nexus is a terminal multiplexer designed specifically for managing multiple AI c
 │         ▲                        │                  │
 │         │                        │                  │
 │  ┌──────┴──────┐                 │                  │
-│  │ Nexus       │                 │                  │
-│  │ Desktop App │                 │                  │
+│  │ PlexusOne   │                 │                  │
+│  │ Desktop     │                 │                  │
 │  └─────────────┘                 │                  │
 └──────────────────────────────────┼──────────────────┘
                                    │ WebSocket (LAN)
                           ┌────────▼────────┐
-                          │  Nexus Mobile   │
+                          │ PlexusOne Mobile│
                           │  (Flutter)      │
                           └─────────────────┘
 ```
@@ -49,7 +49,7 @@ Nexus is a terminal multiplexer designed specifically for managing multiple AI c
 <div class="grid cards" markdown>
 
 - :material-download: **[Installation](getting-started/installation.md)**
-  Get Nexus running on your Mac
+  Get PlexusOne Desktop running on your Mac
 
 - :material-rocket-launch: **[Quick Start](getting-started/quickstart.md)**
   Start managing agents in 5 minutes
@@ -57,7 +57,7 @@ Nexus is a terminal multiplexer designed specifically for managing multiple AI c
 - :material-book-open-variant: **[User Guide](guide/desktop/overview.md)**
   Learn the full feature set
 
-- :material-github: **[Source Code](https://github.com/plexusone/nexus)**
+- :material-github: **[Source Code](https://github.com/plexusone/plexusone-apps)**
   View on GitHub
 
 - :material-history: **[Changelog](releases/changelog.md)**
@@ -65,7 +65,7 @@ Nexus is a terminal multiplexer designed specifically for managing multiple AI c
 
 </div>
 
-## Why Nexus?
+## Why PlexusOne Desktop?
 
 When running multiple AI coding agents, you need to:
 
@@ -74,7 +74,7 @@ When running multiple AI coding agents, you need to:
 - **Keep sessions alive** so agents can continue working while you're away
 - **Review history** to understand what changes agents made
 
-Nexus solves these problems with a purpose-built interface for AI agent workflows.
+PlexusOne Desktop solves these problems with a purpose-built interface for AI agent workflows.
 
 ## Status
 

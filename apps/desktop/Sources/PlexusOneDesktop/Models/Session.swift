@@ -1,7 +1,7 @@
 import Foundation
 
 /// Represents a tmux session that can be attached to a pane
-struct NexusSession: Identifiable, Codable, Hashable {
+struct Session: Identifiable, Codable, Hashable {
     let id: UUID
     let name: String
     let tmuxSession: String

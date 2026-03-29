@@ -94,7 +94,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         let alert = NSAlert()
         alert.messageText = "tmux Not Found"
         alert.informativeText = """
-            Nexus requires tmux to manage terminal sessions.
+            PlexusOne Desktop requires tmux to manage terminal sessions.
 
             Install tmux using Homebrew:
             brew install tmux

@@ -1,6 +1,6 @@
 # Architecture
 
-Technical architecture of the Nexus multi-agent orchestration platform.
+Technical architecture of the PlexusOne multi-agent orchestration platform.
 
 ## System Overview
 
@@ -51,7 +51,7 @@ The macOS desktop application provides a native multi-pane terminal interface.
 **Architecture:**
 
 ```
-NexusApp
+PlexusOneDesktopApp
 ├── AppDelegate              # App lifecycle, menu bar, new window handling
 ├── AppState (Singleton)     # Shared state across windows
 │   ├── SessionManager       # tmux session management (shared)

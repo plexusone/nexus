@@ -15,7 +15,7 @@
 
 #### tmux (Required)
 
-Nexus uses tmux for session management. Install via Homebrew:
+PlexusOne Desktop uses tmux for session management. Install via Homebrew:
 
 ```bash
 brew install tmux
@@ -30,7 +30,7 @@ tmux -V
 
 #### AI CLI Tools (Optional)
 
-Nexus works with any CLI tool that runs in tmux, but it's designed for:
+PlexusOne Desktop works with any CLI tool that runs in tmux, but it's designed for:
 
 - **Claude Code** - Anthropic's AI coding assistant
 - **Kiro CLI** - AI agent framework
@@ -67,5 +67,5 @@ Required only if using the mobile app.
 
 ### Runtime Requirements
 
-- Same machine as Nexus Desktop (or network accessible)
+- Same machine as PlexusOne Desktop (or network accessible)
 - Port 9600 available (configurable)

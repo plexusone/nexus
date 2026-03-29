@@ -21,13 +21,13 @@ struct GridConfig: Equatable {
 /// Manages the state of multiple panes
 @Observable
 class PaneManager {
-    var attachedSessions: [Int: NexusSession] = [:]
+    var attachedSessions: [Int: Session] = [:]
 
-    func session(for paneId: Int) -> NexusSession? {
+    func session(for paneId: Int) -> Session? {
         attachedSessions[paneId]
     }
 
-    func attach(session: NexusSession, to paneId: Int) {
+    func attach(session: Session, to paneId: Int) {
         attachedSessions[paneId] = session
     }
 
@@ -35,7 +35,7 @@ class PaneManager {
         attachedSessions.removeValue(forKey: paneId)
     }
 
-    func binding(for paneId: Int) -> Binding<NexusSession?> {
+    func binding(for paneId: Int) -> Binding<Session?> {
         Binding(
             get: { self.attachedSessions[paneId] },
             set: { newValue in
@@ -52,7 +52,7 @@ class PaneManager {
 /// Grid layout view that displays multiple panes
 struct GridLayoutView: View {
     let config: GridConfig
-    let sessions: [NexusSession]
+    let sessions: [Session]
     let sessionManager: SessionManager
     @Bindable var paneManager: PaneManager
     let onRequestNewSession: () -> Void
@@ -136,9 +136,9 @@ struct LayoutPickerView: View {
     GridLayoutView(
         config: GridConfig(columns: 2, rows: 2),
         sessions: [
-            NexusSession(name: "coder-1", status: .running),
-            NexusSession(name: "coder-2", status: .idle),
-            NexusSession(name: "reviewer", status: .stuck)
+            Session(name: "coder-1", status: .running),
+            Session(name: "coder-2", status: .idle),
+            Session(name: "reviewer", status: .stuck)
         ],
         sessionManager: SessionManager(),
         paneManager: PaneManager(),

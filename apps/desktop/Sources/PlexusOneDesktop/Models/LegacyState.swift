@@ -2,7 +2,7 @@ import Foundation
 
 /// Legacy v1 state format (single-window)
 /// Kept for migration purposes - new state uses MultiWindowState
-struct NexusState: Codable {
+struct LegacyState: Codable {
     /// Grid layout configuration
     var gridColumns: Int
     var gridRows: Int

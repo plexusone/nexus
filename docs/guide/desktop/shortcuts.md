@@ -9,7 +9,7 @@ Keyboard shortcuts for efficient navigation and control.
 | `⌘ N` | New session |
 | `⌘ R` | Refresh sessions |
 | `⌘ ,` | Open settings |
-| `⌘ Q` | Quit Nexus |
+| `⌘ Q` | Quit PlexusOne Desktop |
 
 ## Window Management
 
@@ -34,11 +34,11 @@ When a pane is focused, standard terminal shortcuts work:
 
 ## tmux Passthrough
 
-Since Nexus attaches to tmux sessions, tmux shortcuts work:
+Since PlexusOne Desktop attaches to tmux sessions, tmux shortcuts work:
 
 | Shortcut | Action |
 |----------|--------|
-| `Ctrl B d` | Detach from session (use Nexus detach instead) |
+| `Ctrl B d` | Detach from session (use PlexusOne Desktop detach instead) |
 | `Ctrl B [` | Enter scroll mode |
 | `Ctrl B ]` | Paste buffer |
 
@@ -70,4 +70,4 @@ Future versions will add:
 
 Keyboard shortcuts are not yet customizable. This feature is planned for a future release.
 
-To request a shortcut, open an issue on [GitHub](https://github.com/plexusone/nexus/issues).
+To request a shortcut, open an issue on [GitHub](https://github.com/plexusone/plexusone-apps/issues).

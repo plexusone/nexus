@@ -103,8 +103,8 @@ final class WindowStateManager {
                 return
             }
 
-            // Fall back to v1 (single-window NexusState) format and migrate
-            if let singleState = try? decoder.decode(NexusState.self, from: data) {
+            // Fall back to v1 (single-window LegacyState) format and migrate
+            if let singleState = try? decoder.decode(LegacyState.self, from: data) {
                 let migratedConfig = WindowConfig(
                     gridConfig: singleState.gridConfig,
                     paneAttachments: singleState.paneAttachments

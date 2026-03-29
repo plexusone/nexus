@@ -4,26 +4,26 @@
 import PackageDescription
 
 let package = Package(
-    name: "Nexus",
+    name: "PlexusOneDesktop",
     platforms: [
         .macOS(.v14)
     ],
     products: [
-        .executable(name: "Nexus", targets: ["Nexus"])
+        .executable(name: "PlexusOneDesktop", targets: ["PlexusOneDesktop"])
     ],
     dependencies: [
         .package(url: "https://github.com/migueldeicaza/SwiftTerm.git", branch: "main")
     ],
     targets: [
         .executableTarget(
-            name: "Nexus",
+            name: "PlexusOneDesktop",
             dependencies: ["SwiftTerm"],
-            path: "Sources/Nexus"
+            path: "Sources/PlexusOneDesktop"
         ),
         .testTarget(
-            name: "NexusTests",
-            dependencies: ["Nexus"],
-            path: "Tests/NexusTests"
+            name: "PlexusOneDesktopTests",
+            dependencies: ["PlexusOneDesktop"],
+            path: "Tests/PlexusOneDesktopTests"
         )
     ]
 )

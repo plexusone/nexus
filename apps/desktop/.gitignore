@@ -1,0 +1,17 @@
+# Build artifacts
+.build/
+*.xcodeproj/
+*.xcworkspace/
+DerivedData/
+
+# App bundle (built artifact)
+*.app/
+PlexusOne Desktop.app/
+
+# Package cache
+.swiftpm/
+Package.resolved
+
+# Xcode user data
+*.xcuserstate
+xcuserdata/

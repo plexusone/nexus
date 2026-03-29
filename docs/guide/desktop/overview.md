@@ -1,6 +1,6 @@
 # Desktop App Overview
 
-Nexus Desktop is a macOS application for managing multiple AI CLI agent sessions in a unified interface.
+PlexusOne Desktop is a macOS application for managing multiple AI CLI agent sessions in a unified interface.
 
 ## Main Interface
 
@@ -118,7 +118,7 @@ On restart, you're prompted to restore or start fresh.
 
 ### Session Creation
 
-Create new tmux sessions directly from Nexus:
+Create new tmux sessions directly from PlexusOne Desktop:
 
 1. Click the **+** button in the toolbar or status bar
 2. Enter a session name

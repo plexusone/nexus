@@ -1,5 +1,5 @@
 import XCTest
-@testable import Nexus
+@testable import PlexusOneDesktop
 
 final class WindowStateManagerTests: XCTestCase {
 

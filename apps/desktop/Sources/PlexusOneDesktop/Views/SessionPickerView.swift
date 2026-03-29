@@ -2,9 +2,9 @@ import SwiftUI
 
 /// Dropdown picker for selecting a tmux session to attach to
 struct SessionPickerView: View {
-    let sessions: [NexusSession]
-    let currentSession: NexusSession?
-    let onSelect: (NexusSession) -> Void
+    let sessions: [Session]
+    let currentSession: Session?
+    let onSelect: (Session) -> Void
     let onCreateNew: () -> Void
 
     var body: some View {
@@ -85,9 +85,9 @@ struct StatusIndicatorView: View {
     VStack(spacing: 20) {
         SessionPickerView(
             sessions: [
-                NexusSession(name: "coder-1", status: .running),
-                NexusSession(name: "reviewer", status: .idle),
-                NexusSession(name: "planner", status: .stuck)
+                Session(name: "coder-1", status: .running),
+                Session(name: "reviewer", status: .idle),
+                Session(name: "planner", status: .stuck)
             ],
             currentSession: nil,
             onSelect: { _ in },
@@ -96,9 +96,9 @@ struct StatusIndicatorView: View {
 
         SessionPickerView(
             sessions: [
-                NexusSession(name: "coder-1", status: .running),
+                Session(name: "coder-1", status: .running),
             ],
-            currentSession: NexusSession(name: "coder-1", status: .running),
+            currentSession: Session(name: "coder-1", status: .running),
             onSelect: { _ in },
             onCreateNew: { }
         )

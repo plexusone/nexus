@@ -3,11 +3,11 @@
 <plist version="1.0">
 <dict>
     <key>CFBundleName</key>
-    <string>Nexus</string>
+    <string>PlexusOne Desktop</string>
     <key>CFBundleDisplayName</key>
-    <string>Nexus</string>
+    <string>PlexusOne Desktop</string>
     <key>CFBundleIdentifier</key>
-    <string>com.plexusone.nexus</string>
+    <string>com.plexusone.desktop</string>
     <key>CFBundleVersion</key>
     <string>1.0.0</string>
     <key>CFBundleShortVersionString</key>
@@ -15,7 +15,7 @@
     <key>CFBundlePackageType</key>
     <string>APPL</string>
     <key>CFBundleExecutable</key>
-    <string>Nexus</string>
+    <string>PlexusOneDesktop</string>
     <key>LSMinimumSystemVersion</key>
     <string>14.0</string>
     <key>NSHighResolutionCapable</key>
