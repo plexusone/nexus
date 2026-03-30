@@ -7,6 +7,7 @@ import AssistantKit
 class TerminalContainerView: NSView {
     let terminalView: AppTerminalView
     private var lastFocusState = false
+    private var windowObservation: NSKeyValueObservation?
 
     init(terminalView: AppTerminalView) {
         self.terminalView = terminalView
@@ -24,6 +25,19 @@ class TerminalContainerView: NSView {
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    deinit {
+        windowObservation?.invalidate()
+    }
+
+    override func viewDidMoveToWindow() {
+        super.viewDidMoveToWindow()
+        // Observe window's firstResponder changes
+        windowObservation?.invalidate()
+        windowObservation = window?.observe(\.firstResponder, options: [.new]) { [weak self] _, _ in
+            self?.updateFocusState()
+        }
     }
 
     override var acceptsFirstResponder: Bool { true }
@@ -46,7 +60,8 @@ class TerminalContainerView: NSView {
         // Ensure we become first responder on click
         window?.makeFirstResponder(terminalView)
         postFocusChange(focused: true)
-        super.mouseDown(with: event)
+        // Forward to terminal for text selection
+        terminalView.mouseDown(with: event)
     }
 
     /// Check if this terminal has focus and notify if changed

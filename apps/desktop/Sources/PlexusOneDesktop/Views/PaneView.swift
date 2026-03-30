@@ -77,15 +77,15 @@ struct PaneView: View {
             }
         }
         .background(Color(nsColor: .windowBackgroundColor))
-        .cornerRadius(4)
+        .cornerRadius(6)
         .overlay(
-            RoundedRectangle(cornerRadius: 4)
+            RoundedRectangle(cornerRadius: 6)
                 .stroke(
-                    isFocused ? Color.accentColor : Color(nsColor: .separatorColor),
-                    lineWidth: isFocused ? 2 : 1
+                    isFocused ? Color.blue : Color(nsColor: .separatorColor),
+                    lineWidth: isFocused ? 3 : 1
                 )
         )
-        .shadow(color: isFocused ? Color.accentColor.opacity(0.3) : .clear, radius: 4)
+        .shadow(color: isFocused ? Color.blue.opacity(0.5) : .clear, radius: 8)
         .onReceive(NotificationCenter.default.publisher(for: .paneFocusChanged)) { notification in
             guard let userInfo = notification.userInfo,
                   let sessionId = userInfo["sessionId"] as? UUID,
@@ -123,8 +123,8 @@ struct PaneHeaderView: View {
         HStack(spacing: 4) {
             // Focus indicator dot
             Circle()
-                .fill(isFocused ? Color.accentColor : Color.clear)
-                .frame(width: 6, height: 6)
+                .fill(isFocused ? Color.blue : Color.gray.opacity(0.3))
+                .frame(width: 8, height: 8)
                 .padding(.leading, 2)
 
             // Session dropdown
@@ -182,8 +182,8 @@ struct PaneHeaderView: View {
 
             // Pane number indicator with focus highlight
             Text("#\(paneId)")
-                .font(.system(size: 9, weight: isFocused ? .bold : .medium))
-                .foregroundColor(isFocused ? Color.accentColor : Color(nsColor: .tertiaryLabelColor))
+                .font(.system(size: 10, weight: isFocused ? .bold : .medium))
+                .foregroundColor(isFocused ? Color.blue : Color(nsColor: .tertiaryLabelColor))
                 .padding(.horizontal, 4)
 
             // Pop-out and Detach buttons (only show if attached)
@@ -207,11 +207,11 @@ struct PaneHeaderView: View {
         }
         .padding(.horizontal, 6)
         .padding(.vertical, 4)
-        .background(isFocused ? Color.accentColor.opacity(0.1) : Color(nsColor: .windowBackgroundColor))
+        .background(isFocused ? Color.blue.opacity(0.15) : Color(nsColor: .windowBackgroundColor))
         .overlay(
             Rectangle()
-                .frame(height: 1)
-                .foregroundColor(isFocused ? Color.accentColor.opacity(0.3) : Color(nsColor: .separatorColor)),
+                .frame(height: 2)
+                .foregroundColor(isFocused ? Color.blue : Color(nsColor: .separatorColor)),
             alignment: .bottom
         )
     }
