@@ -183,29 +183,46 @@ struct ContentView: View {
         gridConfig = windowConfig.gridConfig
 
         // Restore pane attachments
+        NSLog("PlexusOne: Restoring %d pane attachments, available sessions: %@",
+              windowConfig.paneAttachments.count,
+              sessionManager.sessions.map { $0.tmuxSession }.joined(separator: ", "))
+
         for (paneIdStr, tmuxSessionName) in windowConfig.paneAttachments {
             guard let paneId = Int(paneIdStr) else { continue }
             if let session = sessionManager.sessions.first(where: { $0.tmuxSession == tmuxSessionName }) {
                 paneManager.attach(session: session, to: paneId)
+                NSLog("PlexusOne: Restored pane %d with session: %@", paneId, session.name)
+            } else {
+                NSLog("PlexusOne: Could not find session '%@' for pane %d", tmuxSessionName, paneId)
             }
         }
     }
 
     private func restoreWindowState() {
-        // Pop the first pending config for this window
-        if let config = windowStateManager.popNextPendingConfig() {
-            registerWindow(config: config)
-        } else {
-            registerWindow()
-        }
+        // Ensure sessions are loaded before restoring
+        Task {
+            // Force a refresh to ensure we have the latest sessions
+            await sessionManager.refresh()
 
-        // Notify AppDelegate to open additional windows for remaining pending configs
-        if windowStateManager.hasPendingConfigs {
-            NotificationCenter.default.post(
-                name: .restoreComplete,
-                object: nil,
-                userInfo: ["windowStateManager": windowStateManager]
-            )
+            await MainActor.run {
+                // Pop the first pending config for this window
+                if let config = windowStateManager.popNextPendingConfig() {
+                    NSLog("PlexusOne: Restoring window with config: %@", config.paneAttachments.description)
+                    registerWindow(config: config)
+                } else {
+                    NSLog("PlexusOne: No pending config, registering new window")
+                    registerWindow()
+                }
+
+                // Notify AppDelegate to open additional windows for remaining pending configs
+                if windowStateManager.hasPendingConfigs {
+                    NotificationCenter.default.post(
+                        name: .restoreComplete,
+                        object: nil,
+                        userInfo: ["windowStateManager": windowStateManager]
+                    )
+                }
+            }
         }
     }
 
