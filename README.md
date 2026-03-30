@@ -1,4 +1,4 @@
-# PlexusOne Apps
+# PlexusOne App
 
 [![Swift CI][swift-ci-svg]][swift-ci-url]
 [![License][license-svg]][license-url]
