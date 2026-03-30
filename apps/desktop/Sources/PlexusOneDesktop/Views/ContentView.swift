@@ -18,6 +18,10 @@ struct ContentView: View {
         appState.windowStateManager
     }
 
+    private var inputMonitor: InputMonitor {
+        appState.inputMonitor
+    }
+
     var body: some View {
         VStack(spacing: 0) {
             if !isReady {
@@ -34,6 +38,7 @@ struct ContentView: View {
                     config: gridConfig,
                     sessions: sessionManager.sessions,
                     sessionManager: sessionManager,
+                    inputMonitor: inputMonitor,
                     paneManager: paneManager,
                     onRequestNewSession: {
                         showNewSessionSheet = true

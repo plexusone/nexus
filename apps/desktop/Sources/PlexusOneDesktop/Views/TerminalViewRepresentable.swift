@@ -1,10 +1,12 @@
 import SwiftUI
 import AppKit
 import SwiftTerm
+import AssistantKit
 
 /// Container view that hosts AppTerminalView and forwards scroll events
 class TerminalContainerView: NSView {
     let terminalView: AppTerminalView
+    private var lastFocusState = false
 
     init(terminalView: AppTerminalView) {
         self.terminalView = terminalView
@@ -32,8 +34,42 @@ class TerminalContainerView: NSView {
     }
 
     override func becomeFirstResponder() -> Bool {
-        // Forward first responder to terminal
-        return terminalView.becomeFirstResponder()
+        // Forward first responder to terminal and notify focus change
+        let result = terminalView.becomeFirstResponder()
+        if result {
+            postFocusChange(focused: true)
+        }
+        return result
+    }
+
+    override func mouseDown(with event: NSEvent) {
+        // Ensure we become first responder on click
+        window?.makeFirstResponder(terminalView)
+        postFocusChange(focused: true)
+        super.mouseDown(with: event)
+    }
+
+    /// Check if this terminal has focus and notify if changed
+    func updateFocusState() {
+        let isFocused = window?.firstResponder === terminalView
+        if isFocused != lastFocusState {
+            lastFocusState = isFocused
+            postFocusChange(focused: isFocused)
+        }
+    }
+
+    private func postFocusChange(focused: Bool) {
+        guard let sessionId = terminalView.attachedSessionId() else { return }
+        lastFocusState = focused
+
+        NotificationCenter.default.post(
+            name: .paneFocusChanged,
+            object: nil,
+            userInfo: [
+                "sessionId": sessionId,
+                "focused": focused
+            ]
+        )
     }
 }
 
@@ -44,7 +80,9 @@ struct AppTerminalViewRepresentable: NSViewRepresentable {
 
     @Binding var attachedSession: Session?
     let sessionManager: SessionManager
+    let inputMonitor: InputMonitor
     var onSessionEnded: (() -> Void)?
+    var onInputDetected: ((DetectionResult) -> Void)?
 
     func makeNSView(context: Context) -> TerminalContainerView {
         let terminalView = AppTerminalView(frame: .zero)
@@ -61,6 +99,11 @@ struct AppTerminalViewRepresentable: NSViewRepresentable {
         }
 
         let container = TerminalContainerView(terminalView: terminalView)
+        context.coordinator.containerView = container
+
+        // Start input detection and focus polling
+        context.coordinator.startInputDetection()
+
         return container
     }
 
@@ -108,15 +151,57 @@ struct AppTerminalViewRepresentable: NSViewRepresentable {
     class Coordinator: NSObject, LocalProcessTerminalViewDelegate {
         var parent: AppTerminalViewRepresentable
         weak var terminalView: AppTerminalView?
+        weak var containerView: TerminalContainerView?
         var scrollMonitor: Any?
+        var inputDetectionTimer: Timer?
 
         init(_ parent: AppTerminalViewRepresentable) {
             self.parent = parent
         }
 
         deinit {
+            inputDetectionTimer?.invalidate()
             if let monitor = scrollMonitor {
                 NSEvent.removeMonitor(monitor)
+            }
+        }
+
+        /// Start periodic input detection and focus checking
+        func startInputDetection() {
+            // Poll for input prompts and focus state every 500ms
+            inputDetectionTimer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: true) { [weak self] _ in
+                self?.checkForInputPrompts()
+                self?.containerView?.updateFocusState()
+            }
+        }
+
+        private func checkForInputPrompts() {
+            guard let terminalView = terminalView,
+                  let sessionId = terminalView.attachedSessionId() else {
+                return
+            }
+
+            // Extract recent terminal content for input detection
+            let content = extractRecentContent(from: terminalView, lineCount: 15)
+            guard !content.isEmpty else { return }
+
+            // Get cursor position
+            guard let terminal = terminalView.terminal else { return }
+            let cursor = terminal.getCursorLocation()
+            let cursorPosition = (row: cursor.y, col: cursor.x)
+
+            // Process through InputMonitor
+            parent.inputMonitor.processTerminalUpdate(
+                sessionId: sessionId,
+                content: content,
+                cursorPosition: cursorPosition
+            )
+
+            // Notify parent if input detected
+            if let result = parent.inputMonitor.alert(for: sessionId) {
+                DispatchQueue.main.async { [weak self] in
+                    self?.parent.onInputDetected?(result)
+                }
             }
         }
 
@@ -137,7 +222,10 @@ struct AppTerminalViewRepresentable: NSViewRepresentable {
             }
         }
 
+        // MARK: - LocalProcessTerminalViewDelegate
+
         func processTerminated(source: TerminalView, exitCode: Int32?) {
+            inputDetectionTimer?.invalidate()
             DispatchQueue.main.async { [weak self] in
                 self?.parent.onSessionEnded?()
             }
@@ -160,6 +248,29 @@ struct AppTerminalViewRepresentable: NSViewRepresentable {
             if let url = URL(string: link) {
                 NSWorkspace.shared.open(url)
             }
+        }
+
+        // MARK: - Input Detection Helpers
+
+        /// Extract the last N lines of terminal content for pattern matching
+        private func extractRecentContent(from terminalView: AppTerminalView, lineCount: Int) -> String {
+            guard let terminal = terminalView.terminal else { return "" }
+
+            let dims = terminal.getDims()
+            let topVisible = terminal.getTopVisibleRow()
+            let totalRows = topVisible + dims.rows
+
+            // Get the last N visible lines
+            let startRow = max(0, totalRows - lineCount)
+            var lines: [String] = []
+
+            for row in startRow..<totalRows {
+                if let line = terminal.getLine(row: row) {
+                    lines.append(line.translateToString(trimRight: true))
+                }
+            }
+
+            return lines.joined(separator: "\n")
         }
     }
 }

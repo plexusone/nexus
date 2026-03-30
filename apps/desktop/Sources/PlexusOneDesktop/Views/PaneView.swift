@@ -1,14 +1,18 @@
 import SwiftUI
+import AssistantKit
 
 /// A single pane with a compact session dropdown header and terminal view
 struct PaneView: View {
     let paneId: Int
     let sessions: [Session]
     let sessionManager: SessionManager
+    let inputMonitor: InputMonitor
     @Binding var attachedSession: Session?
     let onRequestNewSession: () -> Void
 
     @State private var isHovering = false
+    @State private var currentInputAlert: DetectionResult?
+    @State private var isFocused = false
 
     var body: some View {
         VStack(spacing: 0) {
@@ -17,6 +21,7 @@ struct PaneView: View {
                 paneId: paneId,
                 sessions: sessions,
                 currentSession: attachedSession,
+                isFocused: isFocused,
                 onSelectSession: { session in
                     attachedSession = session
                 },
@@ -38,13 +43,28 @@ struct PaneView: View {
 
             // Terminal or detached placeholder
             if attachedSession != nil {
-                AppTerminalViewRepresentable(
-                    attachedSession: $attachedSession,
-                    sessionManager: sessionManager,
-                    onSessionEnded: {
-                        attachedSession = nil
+                ZStack(alignment: .topTrailing) {
+                    AppTerminalViewRepresentable(
+                        attachedSession: $attachedSession,
+                        sessionManager: sessionManager,
+                        inputMonitor: inputMonitor,
+                        onSessionEnded: {
+                            attachedSession = nil
+                        },
+                        onInputDetected: { result in
+                            currentInputAlert = result
+                        }
+                    )
+
+                    // Input indicator overlay
+                    if let alert = currentInputAlert {
+                        InputIndicatorView(
+                            result: alert,
+                            onDismiss: { currentInputAlert = nil }
+                        )
+                        .padding(8)
                     }
-                )
+                }
             } else {
                 // Compact detached state
                 CompactDetachedView(
@@ -60,8 +80,31 @@ struct PaneView: View {
         .cornerRadius(4)
         .overlay(
             RoundedRectangle(cornerRadius: 4)
-                .stroke(Color(nsColor: .separatorColor), lineWidth: 1)
+                .stroke(
+                    isFocused ? Color.accentColor : Color(nsColor: .separatorColor),
+                    lineWidth: isFocused ? 2 : 1
+                )
         )
+        .shadow(color: isFocused ? Color.accentColor.opacity(0.3) : .clear, radius: 4)
+        .onReceive(NotificationCenter.default.publisher(for: .paneFocusChanged)) { notification in
+            guard let userInfo = notification.userInfo,
+                  let sessionId = userInfo["sessionId"] as? UUID,
+                  let focused = userInfo["focused"] as? Bool else {
+                return
+            }
+
+            // Update focus state if this notification is for our session
+            if sessionId == attachedSession?.id {
+                withAnimation(.easeInOut(duration: 0.15)) {
+                    isFocused = focused
+                }
+            } else if focused {
+                // Another pane gained focus, so we lose it
+                withAnimation(.easeInOut(duration: 0.15)) {
+                    isFocused = false
+                }
+            }
+        }
     }
 }
 
@@ -70,6 +113,7 @@ struct PaneHeaderView: View {
     let paneId: Int
     let sessions: [Session]
     let currentSession: Session?
+    let isFocused: Bool
     let onSelectSession: (Session) -> Void
     let onDetach: () -> Void
     let onPopOut: () -> Void
@@ -77,6 +121,12 @@ struct PaneHeaderView: View {
 
     var body: some View {
         HStack(spacing: 4) {
+            // Focus indicator dot
+            Circle()
+                .fill(isFocused ? Color.accentColor : Color.clear)
+                .frame(width: 6, height: 6)
+                .padding(.leading, 2)
+
             // Session dropdown
             Menu {
                 if sessions.isEmpty {
@@ -130,10 +180,10 @@ struct PaneHeaderView: View {
 
             Spacer()
 
-            // Pane number indicator
+            // Pane number indicator with focus highlight
             Text("#\(paneId)")
-                .font(.system(size: 9, weight: .medium))
-                .foregroundColor(Color(nsColor: .tertiaryLabelColor))
+                .font(.system(size: 9, weight: isFocused ? .bold : .medium))
+                .foregroundColor(isFocused ? Color.accentColor : Color(nsColor: .tertiaryLabelColor))
                 .padding(.horizontal, 4)
 
             // Pop-out and Detach buttons (only show if attached)
@@ -157,11 +207,11 @@ struct PaneHeaderView: View {
         }
         .padding(.horizontal, 6)
         .padding(.vertical, 4)
-        .background(Color(nsColor: .windowBackgroundColor))
+        .background(isFocused ? Color.accentColor.opacity(0.1) : Color(nsColor: .windowBackgroundColor))
         .overlay(
             Rectangle()
                 .frame(height: 1)
-                .foregroundColor(Color(nsColor: .separatorColor)),
+                .foregroundColor(isFocused ? Color.accentColor.opacity(0.3) : Color(nsColor: .separatorColor)),
             alignment: .bottom
         )
     }
@@ -232,6 +282,7 @@ struct CompactDetachedView: View {
             Session(name: "reviewer", status: .idle)
         ],
         sessionManager: SessionManager(),
+        inputMonitor: InputMonitor(),
         attachedSession: .constant(nil),
         onRequestNewSession: {}
     )

@@ -54,6 +54,7 @@ struct GridLayoutView: View {
     let config: GridConfig
     let sessions: [Session]
     let sessionManager: SessionManager
+    let inputMonitor: InputMonitor
     @Bindable var paneManager: PaneManager
     let onRequestNewSession: () -> Void
 
@@ -72,6 +73,7 @@ struct GridLayoutView: View {
                                 paneId: paneId,
                                 sessions: sessions,
                                 sessionManager: sessionManager,
+                                inputMonitor: inputMonitor,
                                 attachedSession: paneManager.binding(for: paneId),
                                 onRequestNewSession: onRequestNewSession
                             )
@@ -141,6 +143,7 @@ struct LayoutPickerView: View {
             Session(name: "reviewer", status: .stuck)
         ],
         sessionManager: SessionManager(),
+        inputMonitor: InputMonitor(),
         paneManager: PaneManager(),
         onRequestNewSession: {}
     )
