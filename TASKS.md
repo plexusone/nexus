@@ -2,6 +2,14 @@
 
 ## Open
 
+### iOS App - Upstream Dependencies
+
+- [ ] **SwiftTerm iOS Metal rendering fix**: Using temporary fork with fix for iOS Metal backend ignoring foreground colors. The Metal GPU backend renders all text glyphs in white due to font smoothing causing subpixel color fringing. Fix: disable font smoothing on iOS in `CoreTextGlyphRasterizer.swift`.
+  - **Upstream issue**: https://github.com/migueldeicaza/SwiftTerm/issues/512
+  - **Workaround applied**: Fork with `context.setAllowsFontSmoothing(false)` for iOS
+  - **Action**: Check if issue is closed and switch back to upstream SwiftTerm
+  - **Added**: 2026-04-02
+
 ### Desktop App - Current
 
 - [ ] **Session restore debugging**: Session restore from `~/.plexusone/state.json` may not be attaching saved sessions. Added NSLog debugging but console output not visible in iTerm2. Need to verify restore flow and session matching.
