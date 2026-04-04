@@ -104,7 +104,12 @@ func (m *Manager) Attach(sessionName string) (*Session, error) {
 	cmd := exec.Command(tmuxPath, "attach-session", "-t", sessionName)
 	cmd.Env = append(os.Environ(), "TERM=xterm-256color")
 
-	ptmx, err := pty.Start(cmd)
+	ptmx, err := pty.StartWithSize(cmd, &pty.Winsize{
+		Rows: 24,
+		Cols: 80,
+		X:    0,
+		Y:    0,
+	})
 	if err != nil {
 		return nil, fmt.Errorf("failed to start pty: %w", err)
 	}

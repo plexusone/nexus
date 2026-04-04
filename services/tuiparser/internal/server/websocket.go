@@ -219,6 +219,10 @@ func (c *Client) handleMessage(data []byte) {
 	}
 
 	switch base.Type {
+	case protocol.TypeList:
+		// Send session list to this client
+		c.server.sendSessionList(c)
+
 	case protocol.TypeSubscribe:
 		var msg protocol.SubscribeMessage
 		if err := json.Unmarshal(data, &msg); err != nil {

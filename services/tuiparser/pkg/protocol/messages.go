@@ -17,6 +17,7 @@ const (
 	TypeError    MessageType = "error"
 
 	// Client -> Server
+	TypeList        MessageType = "list"
 	TypeSubscribe   MessageType = "subscribe"
 	TypeUnsubscribe MessageType = "unsubscribe"
 	TypeInput       MessageType = "input"
