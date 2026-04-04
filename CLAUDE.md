@@ -36,7 +36,18 @@ plexusone-app/
 │   │   │   ├── Services/     # Business logic (SessionManager, AppState)
 │   │   │   └── Views/        # SwiftUI views
 │   │   └── Tests/PlexusOneDesktopTests/
-│   └── mobile/               # PlexusOne Mobile (Flutter) - iOS/Android
+│   ├── flutter/              # PlexusOne Mobile (Flutter) - Cross-platform
+│   │   ├── lib/              # Dart source code
+│   │   ├── ios/              # iOS-specific config
+│   │   ├── android/          # Android-specific config
+│   │   └── test/             # Unit tests
+│   └── ios/                  # PlexusOne Mobile (Native iOS) - Swift/SwiftTerm
+│       ├── Sources/PlexusOneiOS/
+│       │   ├── App/          # App entry point
+│       │   ├── Models/       # Data models
+│       │   ├── Services/     # WebSocket client
+│       │   └── Views/        # SwiftUI views
+│       └── PlexusOneiOS.xcodeproj/
 ├── services/
 │   └── tuiparser/            # WebSocket bridge for mobile (Go)
 │       ├── cmd/tuiparser/    # Entry point
@@ -45,6 +56,7 @@ plexusone-app/
 ├── docs/                     # MkDocs documentation site
 │   ├── guide/desktop/        # Desktop app user guide
 │   ├── guide/mobile/         # Mobile app user guide
+│   ├── development/          # Development guides
 │   ├── design/               # PRDs and design docs
 │   └── releases/             # Release notes
 └── CHANGELOG.json            # Structured changelog (use schangelog to generate CHANGELOG.md)
@@ -76,15 +88,36 @@ cd apps/desktop
 swift test
 ```
 
-### PlexusOne Mobile (Flutter)
+### PlexusOne Mobile - Flutter
 
-Companion app for remote monitoring via WebSocket.
+Cross-platform companion app for remote monitoring via WebSocket.
 
 **Build & Run:**
 ```bash
-cd apps/mobile
+cd apps/flutter
 flutter pub get
-flutter run
+flutter run -d "iPhone 16 Pro"  # iOS Simulator
+flutter run -d chrome           # Web
+flutter run -d macos            # macOS
+```
+
+### PlexusOne Mobile - Native iOS
+
+Native iOS/iPadOS app using SwiftTerm (same terminal library as Desktop).
+
+**Build & Run:**
+```bash
+cd apps/ios
+xcodebuild -project PlexusOneiOS.xcodeproj \
+  -scheme PlexusOneiOS \
+  -sdk iphonesimulator \
+  -destination 'platform=iOS Simulator,name=iPhone 16 Pro' \
+  build
+
+# Install and launch
+xcrun simctl install "iPhone 16 Pro" \
+  ~/Library/Developer/Xcode/DerivedData/PlexusOneiOS-*/Build/Products/Debug-iphonesimulator/PlexusOneiOS.app
+xcrun simctl launch "iPhone 16 Pro" com.plexusone.ios
 ```
 
 ### TUI Parser (Go)
@@ -103,7 +136,8 @@ go build -o bin/tuiparser ./cmd/tuiparser
 | Component | Stack |
 |-----------|-------|
 | Desktop | Swift 5.9+, SwiftUI, SwiftTerm, AppKit |
-| Mobile | Flutter/Dart |
+| Mobile (Flutter) | Flutter 3.x, Dart, xterm package |
+| Mobile (iOS) | Swift 5.9+, SwiftUI, SwiftTerm |
 | TUI Parser | Go 1.22+, gorilla/websocket |
 | Sessions | tmux |
 | Docs | MkDocs Material |
@@ -119,7 +153,8 @@ Follow [Conventional Commits](https://www.conventionalcommits.org/).
 | Scope | Description |
 |-------|-------------|
 | `desktop` | PlexusOne Desktop (Swift/macOS) |
-| `mobile` | PlexusOne Mobile (Flutter) |
+| `flutter` | PlexusOne Mobile - Flutter app |
+| `ios` | PlexusOne Mobile - Native iOS app |
 | `tuiparser` | TUI Parser service (Go) |
 | `docs` | Documentation site |
 | (none) | Cross-cutting changes |
@@ -128,7 +163,8 @@ Follow [Conventional Commits](https://www.conventionalcommits.org/).
 
 ```
 feat(desktop): add multi-window support
-fix(mobile): handle WebSocket reconnection
+fix(flutter): handle WebSocket reconnection
+feat(ios): add SwiftTerm terminal view
 docs: update architecture diagram
 refactor(tuiparser): extract session manager
 ```
@@ -158,8 +194,11 @@ Run these checks before pushing:
 # Desktop (Swift)
 cd apps/desktop && swift build && swift test
 
-# Mobile (Flutter)
-cd apps/mobile && flutter analyze && flutter test
+# Mobile - Flutter
+cd apps/flutter && flutter analyze && flutter test
+
+# Mobile - Native iOS
+cd apps/ios && xcodebuild -scheme PlexusOneiOS -sdk iphonesimulator build
 
 # TUI Parser (Go)
 cd services/tuiparser && go build ./... && go test ./...
@@ -182,7 +221,8 @@ The tuiparser service has no required environment variables.
 | Component | Tool | Command |
 |-----------|------|---------|
 | Desktop | (none configured) | `swift build` catches errors |
-| Mobile | flutter_lints | `flutter analyze` |
+| Flutter | flutter_lints | `flutter analyze` |
+| iOS | (none configured) | `xcodebuild` catches errors |
 | TUI Parser | golangci-lint | `golangci-lint run` |
 
 ## Architecture Notes
