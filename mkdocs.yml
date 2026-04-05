@@ -63,6 +63,7 @@ nav:
     - WebSocket Protocol: reference/protocol.md
   - Development:
     - Architecture: development/architecture.md
+    - Desktop App: development/desktop.md
     - Flutter App: development/flutter.md
     - Native iOS App: development/ios.md
     - Contributing: development/contributing.md
