@@ -10,13 +10,13 @@
       
       
       
-        <link rel="canonical" href="https://plexusone.github.io/plexusone-app/development/contributing/">
+        <link rel="canonical" href="https://plexusone.github.io/plexusone-app/development/desktop/">
       
       
-        <link rel="prev" href="../ios/">
+        <link rel="prev" href="../architecture/">
       
       
-        <link rel="next" href="../design-docs/">
+        <link rel="next" href="../flutter/">
       
       
       <link rel="icon" href="../../assets/images/favicon.png">
@@ -24,7 +24,7 @@
     
     
       
-        <title>Contributing - PlexusOne Apps</title>
+        <title>Desktop App - PlexusOne Apps</title>
       
     
     
@@ -76,7 +76,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#contributing" class="md-skip">
+        <a href="#macos-desktop-app-development" class="md-skip">
           Skip to content
         </a>
       
@@ -110,7 +110,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Contributing
+              Desktop App
             
           </span>
         </div>
@@ -1026,10 +1026,32 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../desktop/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    Desktop App
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   
@@ -1040,6 +1062,266 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#prerequisites" class="md-nav__link">
+    <span class="md-ellipsis">
+      Prerequisites
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#project-setup" class="md-nav__link">
+    <span class="md-ellipsis">
+      Project Setup
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#running-the-app" class="md-nav__link">
+    <span class="md-ellipsis">
+      Running the App
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Running the App">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#command-line-recommended-for-development" class="md-nav__link">
+    <span class="md-ellipsis">
+      Command Line (Recommended for Development)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#restarting-the-app" class="md-nav__link">
+    <span class="md-ellipsis">
+      Restarting the App
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#xcode" class="md-nav__link">
+    <span class="md-ellipsis">
+      Xcode
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#release-build" class="md-nav__link">
+    <span class="md-ellipsis">
+      Release Build
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#development-commands" class="md-nav__link">
+    <span class="md-ellipsis">
+      Development Commands
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#project-structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      Project Structure
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#key-dependencies" class="md-nav__link">
+    <span class="md-ellipsis">
+      Key Dependencies
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#architecture" class="md-nav__link">
+    <span class="md-ellipsis">
+      Architecture
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      Configuration
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Configuration">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#state-persistence" class="md-nav__link">
+    <span class="md-ellipsis">
+      State Persistence
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#environment-variables" class="md-nav__link">
+    <span class="md-ellipsis">
+      Environment Variables
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#testing" class="md-nav__link">
+    <span class="md-ellipsis">
+      Testing
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Testing">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#test-coverage" class="md-nav__link">
+    <span class="md-ellipsis">
+      Test Coverage
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#keyboard-shortcuts" class="md-nav__link">
+    <span class="md-ellipsis">
+      Keyboard Shortcuts
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#troubleshooting" class="md-nav__link">
+    <span class="md-ellipsis">
+      Troubleshooting
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Troubleshooting">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#tmux-not-found" class="md-nav__link">
+    <span class="md-ellipsis">
+      tmux Not Found
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#build-errors" class="md-nav__link">
+    <span class="md-ellipsis">
+      Build Errors
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#package-resolution-failed" class="md-nav__link">
+    <span class="md-ellipsis">
+      Package Resolution Failed
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#console-logging" class="md-nav__link">
+    <span class="md-ellipsis">
+      Console Logging
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#session-not-attaching" class="md-nav__link">
+    <span class="md-ellipsis">
+      Session Not Attaching
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#comparison-with-mobile-apps" class="md-nav__link">
+    <span class="md-ellipsis">
+      Comparison with Mobile Apps
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -1095,32 +1377,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    Contributing
-    
-  </span>
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../contributing/" class="md-nav__link">
         
   
   
@@ -1131,311 +1391,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#getting-started" class="md-nav__link">
-    <span class="md-ellipsis">
-      Getting Started
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Getting Started">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#prerequisites" class="md-nav__link">
-    <span class="md-ellipsis">
-      Prerequisites
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#clone-the-repository" class="md-nav__link">
-    <span class="md-ellipsis">
-      Clone the Repository
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#build-all-components" class="md-nav__link">
-    <span class="md-ellipsis">
-      Build All Components
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#development-workflow" class="md-nav__link">
-    <span class="md-ellipsis">
-      Development Workflow
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Development Workflow">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#branch-naming" class="md-nav__link">
-    <span class="md-ellipsis">
-      Branch Naming
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#commit-messages" class="md-nav__link">
-    <span class="md-ellipsis">
-      Commit Messages
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#pull-requests" class="md-nav__link">
-    <span class="md-ellipsis">
-      Pull Requests
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#code-style" class="md-nav__link">
-    <span class="md-ellipsis">
-      Code Style
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Code Style">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#swift-desktop" class="md-nav__link">
-    <span class="md-ellipsis">
-      Swift (Desktop)
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#go-tui-parser" class="md-nav__link">
-    <span class="md-ellipsis">
-      Go (TUI Parser)
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#dart-mobile" class="md-nav__link">
-    <span class="md-ellipsis">
-      Dart (Mobile)
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#testing" class="md-nav__link">
-    <span class="md-ellipsis">
-      Testing
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Testing">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#desktop" class="md-nav__link">
-    <span class="md-ellipsis">
-      Desktop
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#tui-parser" class="md-nav__link">
-    <span class="md-ellipsis">
-      TUI Parser
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#mobile" class="md-nav__link">
-    <span class="md-ellipsis">
-      Mobile
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#documentation" class="md-nav__link">
-    <span class="md-ellipsis">
-      Documentation
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Documentation">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#when-to-update-docs" class="md-nav__link">
-    <span class="md-ellipsis">
-      When to Update Docs
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#building-docs-locally" class="md-nav__link">
-    <span class="md-ellipsis">
-      Building Docs Locally
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#architecture-decisions" class="md-nav__link">
-    <span class="md-ellipsis">
-      Architecture Decisions
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Architecture Decisions">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#adr-process" class="md-nav__link">
-    <span class="md-ellipsis">
-      ADR Process
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#design-documents" class="md-nav__link">
-    <span class="md-ellipsis">
-      Design Documents
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#reporting-issues" class="md-nav__link">
-    <span class="md-ellipsis">
-      Reporting Issues
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Reporting Issues">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#bug-reports" class="md-nav__link">
-    <span class="md-ellipsis">
-      Bug Reports
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#feature-requests" class="md-nav__link">
-    <span class="md-ellipsis">
-      Feature Requests
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#code-of-conduct" class="md-nav__link">
-    <span class="md-ellipsis">
-      Code of Conduct
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#license" class="md-nav__link">
-    <span class="md-ellipsis">
-      License
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -1665,16 +1620,6 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#getting-started" class="md-nav__link">
-    <span class="md-ellipsis">
-      Getting Started
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Getting Started">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
   <a href="#prerequisites" class="md-nav__link">
     <span class="md-ellipsis">
       Prerequisites
@@ -1682,20 +1627,57 @@
   </a>
   
 </li>
+      
+        <li class="md-nav__item">
+  <a href="#project-setup" class="md-nav__link">
+    <span class="md-ellipsis">
+      Project Setup
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#running-the-app" class="md-nav__link">
+    <span class="md-ellipsis">
+      Running the App
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Running the App">
+      <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#clone-the-repository" class="md-nav__link">
+  <a href="#command-line-recommended-for-development" class="md-nav__link">
     <span class="md-ellipsis">
-      Clone the Repository
+      Command Line (Recommended for Development)
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#build-all-components" class="md-nav__link">
+  <a href="#restarting-the-app" class="md-nav__link">
     <span class="md-ellipsis">
-      Build All Components
+      Restarting the App
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#xcode" class="md-nav__link">
+    <span class="md-ellipsis">
+      Xcode
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#release-build" class="md-nav__link">
+    <span class="md-ellipsis">
+      Release Build
     </span>
   </a>
   
@@ -1707,79 +1689,64 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#development-workflow" class="md-nav__link">
+  <a href="#development-commands" class="md-nav__link">
     <span class="md-ellipsis">
-      Development Workflow
+      Development Commands
     </span>
   </a>
-  
-    <nav class="md-nav" aria-label="Development Workflow">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#branch-naming" class="md-nav__link">
-    <span class="md-ellipsis">
-      Branch Naming
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#commit-messages" class="md-nav__link">
-    <span class="md-ellipsis">
-      Commit Messages
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#pull-requests" class="md-nav__link">
-    <span class="md-ellipsis">
-      Pull Requests
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#code-style" class="md-nav__link">
+  <a href="#project-structure" class="md-nav__link">
     <span class="md-ellipsis">
-      Code Style
+      Project Structure
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Code Style">
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#key-dependencies" class="md-nav__link">
+    <span class="md-ellipsis">
+      Key Dependencies
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#architecture" class="md-nav__link">
+    <span class="md-ellipsis">
+      Architecture
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      Configuration
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Configuration">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#swift-desktop" class="md-nav__link">
+  <a href="#state-persistence" class="md-nav__link">
     <span class="md-ellipsis">
-      Swift (Desktop)
+      State Persistence
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#go-tui-parser" class="md-nav__link">
+  <a href="#environment-variables" class="md-nav__link">
     <span class="md-ellipsis">
-      Go (TUI Parser)
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#dart-mobile" class="md-nav__link">
-    <span class="md-ellipsis">
-      Dart (Mobile)
+      Environment Variables
     </span>
   </a>
   
@@ -1801,27 +1768,9 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#desktop" class="md-nav__link">
+  <a href="#test-coverage" class="md-nav__link">
     <span class="md-ellipsis">
-      Desktop
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#tui-parser" class="md-nav__link">
-    <span class="md-ellipsis">
-      TUI Parser
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#mobile" class="md-nav__link">
-    <span class="md-ellipsis">
-      Mobile
+      Test Coverage
     </span>
   </a>
   
@@ -1833,28 +1782,64 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#documentation" class="md-nav__link">
+  <a href="#keyboard-shortcuts" class="md-nav__link">
     <span class="md-ellipsis">
-      Documentation
+      Keyboard Shortcuts
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Documentation">
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#troubleshooting" class="md-nav__link">
+    <span class="md-ellipsis">
+      Troubleshooting
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Troubleshooting">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#when-to-update-docs" class="md-nav__link">
+  <a href="#tmux-not-found" class="md-nav__link">
     <span class="md-ellipsis">
-      When to Update Docs
+      tmux Not Found
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#building-docs-locally" class="md-nav__link">
+  <a href="#build-errors" class="md-nav__link">
     <span class="md-ellipsis">
-      Building Docs Locally
+      Build Errors
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#package-resolution-failed" class="md-nav__link">
+    <span class="md-ellipsis">
+      Package Resolution Failed
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#console-logging" class="md-nav__link">
+    <span class="md-ellipsis">
+      Console Logging
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#session-not-attaching" class="md-nav__link">
+    <span class="md-ellipsis">
+      Session Not Attaching
     </span>
   </a>
   
@@ -1866,84 +1851,9 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#architecture-decisions" class="md-nav__link">
+  <a href="#comparison-with-mobile-apps" class="md-nav__link">
     <span class="md-ellipsis">
-      Architecture Decisions
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Architecture Decisions">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#adr-process" class="md-nav__link">
-    <span class="md-ellipsis">
-      ADR Process
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#design-documents" class="md-nav__link">
-    <span class="md-ellipsis">
-      Design Documents
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#reporting-issues" class="md-nav__link">
-    <span class="md-ellipsis">
-      Reporting Issues
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Reporting Issues">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#bug-reports" class="md-nav__link">
-    <span class="md-ellipsis">
-      Bug Reports
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#feature-requests" class="md-nav__link">
-    <span class="md-ellipsis">
-      Feature Requests
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#code-of-conduct" class="md-nav__link">
-    <span class="md-ellipsis">
-      Code of Conduct
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#license" class="md-nav__link">
-    <span class="md-ellipsis">
-      License
+      Comparison with Mobile Apps
     </span>
   </a>
   
@@ -1968,173 +1878,365 @@
   
 
 
-<h1 id="contributing">Contributing<a class="headerlink" href="#contributing" title="Permanent link">&para;</a></h1>
-<p>Guidelines for contributing to PlexusOne Desktop.</p>
-<h2 id="getting-started">Getting Started<a class="headerlink" href="#getting-started" title="Permanent link">&para;</a></h2>
-<h3 id="prerequisites">Prerequisites<a class="headerlink" href="#prerequisites" title="Permanent link">&para;</a></h3>
-<ul>
-<li>macOS 14+ (for desktop development)</li>
-<li>Xcode 15+ with Swift 5.9+</li>
-<li>Go 1.21+</li>
-<li>Flutter 3.16+</li>
-<li>tmux 3.0+</li>
-</ul>
-<h3 id="clone-the-repository">Clone the Repository<a class="headerlink" href="#clone-the-repository" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/plexusone/plexusone-app.git
-<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="nb">cd</span><span class="w"> </span>plexusone-app
+<h1 id="macos-desktop-app-development">macOS Desktop App Development<a class="headerlink" href="#macos-desktop-app-development" title="Permanent link">&para;</a></h1>
+<p>The desktop app (<code>apps/desktop</code>) is a native macOS terminal multiplexer built with Swift and SwiftTerm for managing tmux sessions.</p>
+<h2 id="prerequisites">Prerequisites<a class="headerlink" href="#prerequisites" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Tool</th>
+<th>Version</th>
+<th>Installation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Xcode</td>
+<td>15+</td>
+<td>App Store</td>
+</tr>
+<tr>
+<td>macOS</td>
+<td>14+ (Sonoma)</td>
+<td>Required for SwiftUI features</td>
+</tr>
+<tr>
+<td>tmux</td>
+<td>3.x+</td>
+<td><code>brew install tmux</code></td>
+</tr>
+</tbody>
+</table>
+<p>Verify tmux installation:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>tmux<span class="w"> </span>-V
 </code></pre></div>
-<h3 id="build-all-components">Build All Components<a class="headerlink" href="#build-all-components" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1"># Desktop app</span>
-<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="nb">cd</span><span class="w"> </span>apps/desktop
-<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>swift<span class="w"> </span>build
-<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>
-<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="c1"># TUI Parser</span>
-<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="nb">cd</span><span class="w"> </span>services/tuiparser
-<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>go<span class="w"> </span>build<span class="w"> </span>./cmd/tuiparser
-<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>
-<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="c1"># Mobile app</span>
-<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a><span class="nb">cd</span><span class="w"> </span>apps/mobile
-<a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a>flutter<span class="w"> </span>pub<span class="w"> </span>get
-<a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a>flutter<span class="w"> </span>build<span class="w"> </span>ios<span class="w">   </span><span class="c1"># or flutter build apk</span>
+<h2 id="project-setup">Project Setup<a class="headerlink" href="#project-setup" title="Permanent link">&para;</a></h2>
+<p>The project uses Swift Package Manager. No additional setup required:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="nb">cd</span><span class="w"> </span>apps/desktop
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>swift<span class="w"> </span>build
 </code></pre></div>
-<h2 id="development-workflow">Development Workflow<a class="headerlink" href="#development-workflow" title="Permanent link">&para;</a></h2>
-<h3 id="branch-naming">Branch Naming<a class="headerlink" href="#branch-naming" title="Permanent link">&para;</a></h3>
-<p>Use descriptive branch names:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>feat/grid-layout-presets
-<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>fix/session-reconnection
-<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>docs/architecture-update
-<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>refactor/websocket-handler
+<p>Or open in Xcode:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="nb">cd</span><span class="w"> </span>apps/desktop
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>open<span class="w"> </span>Package.swift
 </code></pre></div>
-<h3 id="commit-messages">Commit Messages<a class="headerlink" href="#commit-messages" title="Permanent link">&para;</a></h3>
-<p>Follow <a href="https://www.conventionalcommits.org/">Conventional Commits</a>:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>feat(desktop): add 3x3 grid layout option
-<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>fix(mobile): handle WebSocket reconnection on network change
-<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>docs: update architecture diagram
-<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>refactor(tuiparser): extract session manager
-<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>test(mobile): add WebSocket service tests
+<h2 id="running-the-app">Running the App<a class="headerlink" href="#running-the-app" title="Permanent link">&para;</a></h2>
+<h3 id="command-line-recommended-for-development">Command Line (Recommended for Development)<a class="headerlink" href="#command-line-recommended-for-development" title="Permanent link">&para;</a></h3>
+<p>Build and run:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="nb">cd</span><span class="w"> </span>apps/desktop
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>swift<span class="w"> </span>build<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>.build/debug/PlexusOneDesktop
 </code></pre></div>
-<h3 id="pull-requests">Pull Requests<a class="headerlink" href="#pull-requests" title="Permanent link">&para;</a></h3>
+<h3 id="restarting-the-app">Restarting the App<a class="headerlink" href="#restarting-the-app" title="Permanent link">&para;</a></h3>
+<p>To stop a running instance and restart:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>pkill<span class="w"> </span>-f<span class="w"> </span>PlexusOneDesktop<span class="w"> </span><span class="m">2</span>&gt;/dev/null<span class="p">;</span><span class="w"> </span>swift<span class="w"> </span>build<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>.build/debug/PlexusOneDesktop
+</code></pre></div>
+<h3 id="xcode">Xcode<a class="headerlink" href="#xcode" title="Permanent link">&para;</a></h3>
 <ol>
-<li>Create a feature branch from <code>main</code></li>
-<li>Make your changes with clear commits</li>
-<li>Update documentation if needed</li>
-<li>Run tests and linting</li>
-<li>Submit PR with description of changes</li>
+<li>Open <code>Package.swift</code> in Xcode</li>
+<li>Select the <code>PlexusOneDesktop</code> scheme</li>
+<li>Press ⌘R to build and run</li>
 </ol>
-<h2 id="code-style">Code Style<a class="headerlink" href="#code-style" title="Permanent link">&para;</a></h2>
-<h3 id="swift-desktop">Swift (Desktop)<a class="headerlink" href="#swift-desktop" title="Permanent link">&para;</a></h3>
-<p>Follow Apple's Swift style guide:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="c1">// Good</span>
-<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="kd">func</span><span class="w"> </span><span class="nf">attachToSession</span><span class="p">(</span><span class="kc">_</span><span class="w"> </span><span class="n">sessionName</span><span class="p">:</span><span class="w"> </span><span class="nb">String</span><span class="p">)</span><span class="w"> </span><span class="kr">throws</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="w">    </span><span class="k">guard</span><span class="w"> </span><span class="o">!</span><span class="n">sessionName</span><span class="p">.</span><span class="bp">isEmpty</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="w">        </span><span class="k">throw</span><span class="w"> </span><span class="n">SessionError</span><span class="p">.</span><span class="n">invalidName</span>
-<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="w">    </span><span class="p">}</span>
-<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="w">    </span><span class="c1">// ...</span>
-<a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="p">}</span>
-<a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a>
-<a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a><span class="c1">// Avoid</span>
-<a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a><span class="kd">func</span><span class="w"> </span><span class="nf">attach_to_session</span><span class="p">(</span><span class="n">session_name</span><span class="p">:</span><span class="w"> </span><span class="nb">String</span><span class="p">)</span><span class="w"> </span><span class="kr">throws</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="n">session_name</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="s">&quot;&quot;</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a><span class="w">        </span><span class="c1">// ...</span>
-<a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a><span class="w">    </span><span class="p">}</span>
-<a id="__codelineno-4-14" name="__codelineno-4-14" href="#__codelineno-4-14"></a><span class="p">}</span>
+<h3 id="release-build">Release Build<a class="headerlink" href="#release-build" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>swift<span class="w"> </span>build<span class="w"> </span>-c<span class="w"> </span>release
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>.build/release/PlexusOneDesktop
 </code></pre></div>
-<p><strong>Linting:</strong></p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>swiftlint
+<h2 id="development-commands">Development Commands<a class="headerlink" href="#development-commands" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Command</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>swift build</code></td>
+<td>Build debug version</td>
+</tr>
+<tr>
+<td><code>swift build -c release</code></td>
+<td>Build release version</td>
+</tr>
+<tr>
+<td><code>swift test</code></td>
+<td>Run unit tests</td>
+</tr>
+<tr>
+<td><code>swift package clean</code></td>
+<td>Clean build artifacts</td>
+</tr>
+<tr>
+<td><code>swift package resolve</code></td>
+<td>Resolve dependencies</td>
+</tr>
+<tr>
+<td><code>swift package update</code></td>
+<td>Update dependencies</td>
+</tr>
+</tbody>
+</table>
+<h2 id="project-structure">Project Structure<a class="headerlink" href="#project-structure" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>apps/desktop/
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>├── Package.swift                           # Swift package manifest
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>├── Sources/PlexusOneDesktop/
+<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>│   ├── App/
+<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>│   │   ├── PlexusOneDesktopApp.swift       # @main entry, menus, window management
+<a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a>│   │   └── AppDelegate.swift               # App lifecycle, tmux check
+<a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a>│   ├── Models/
+<a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a>│   │   ├── Session.swift                   # Session, SessionStatus, AgentType
+<a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a>│   │   ├── WindowState.swift               # WindowConfig, MultiWindowState
+<a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a>│   │   └── LegacyState.swift               # v1 → v2 state migration
+<a id="__codelineno-6-11" name="__codelineno-6-11" href="#__codelineno-6-11"></a>│   ├── Services/
+<a id="__codelineno-6-12" name="__codelineno-6-12" href="#__codelineno-6-12"></a>│   │   ├── AppState.swift                  # Shared singleton state
+<a id="__codelineno-6-13" name="__codelineno-6-13" href="#__codelineno-6-13"></a>│   │   ├── SessionManager.swift            # tmux session orchestration
+<a id="__codelineno-6-14" name="__codelineno-6-14" href="#__codelineno-6-14"></a>│   │   ├── WindowStateManager.swift        # Multi-window persistence
+<a id="__codelineno-6-15" name="__codelineno-6-15" href="#__codelineno-6-15"></a>│   │   ├── InputMonitor.swift              # AI prompt detection
+<a id="__codelineno-6-16" name="__codelineno-6-16" href="#__codelineno-6-16"></a>│   │   ├── CommandExecuting.swift          # Protocol for testing
+<a id="__codelineno-6-17" name="__codelineno-6-17" href="#__codelineno-6-17"></a>│   │   └── FileSystemAccessing.swift       # Protocol for testing
+<a id="__codelineno-6-18" name="__codelineno-6-18" href="#__codelineno-6-18"></a>│   └── Views/
+<a id="__codelineno-6-19" name="__codelineno-6-19" href="#__codelineno-6-19"></a>│       ├── ContentView.swift               # Main window content
+<a id="__codelineno-6-20" name="__codelineno-6-20" href="#__codelineno-6-20"></a>│       ├── GridLayoutView.swift            # Multi-pane grid
+<a id="__codelineno-6-21" name="__codelineno-6-21" href="#__codelineno-6-21"></a>│       ├── PaneView.swift                  # Individual pane UI
+<a id="__codelineno-6-22" name="__codelineno-6-22" href="#__codelineno-6-22"></a>│       ├── AppTerminalView.swift           # SwiftTerm subclass
+<a id="__codelineno-6-23" name="__codelineno-6-23" href="#__codelineno-6-23"></a>│       ├── TerminalViewRepresentable.swift # NSViewRepresentable wrapper
+<a id="__codelineno-6-24" name="__codelineno-6-24" href="#__codelineno-6-24"></a>│       ├── NewSessionSheet.swift           # Create session dialog
+<a id="__codelineno-6-25" name="__codelineno-6-25" href="#__codelineno-6-25"></a>│       ├── InputIndicatorView.swift        # AI prompt overlay
+<a id="__codelineno-6-26" name="__codelineno-6-26" href="#__codelineno-6-26"></a>│       └── SettingsView.swift              # App preferences
+<a id="__codelineno-6-27" name="__codelineno-6-27" href="#__codelineno-6-27"></a>├── Tests/PlexusOneDesktopTests/
+<a id="__codelineno-6-28" name="__codelineno-6-28" href="#__codelineno-6-28"></a>│   ├── SessionManagerTests.swift
+<a id="__codelineno-6-29" name="__codelineno-6-29" href="#__codelineno-6-29"></a>│   ├── WindowStateManagerTests.swift
+<a id="__codelineno-6-30" name="__codelineno-6-30" href="#__codelineno-6-30"></a>│   ├── WindowStateTests.swift
+<a id="__codelineno-6-31" name="__codelineno-6-31" href="#__codelineno-6-31"></a>│   ├── AppStateTests.swift
+<a id="__codelineno-6-32" name="__codelineno-6-32" href="#__codelineno-6-32"></a>│   └── Mocks/
+<a id="__codelineno-6-33" name="__codelineno-6-33" href="#__codelineno-6-33"></a>│       ├── MockCommandExecutor.swift
+<a id="__codelineno-6-34" name="__codelineno-6-34" href="#__codelineno-6-34"></a>│       └── MockFileSystem.swift
+<a id="__codelineno-6-35" name="__codelineno-6-35" href="#__codelineno-6-35"></a>└── Resources/
+<a id="__codelineno-6-36" name="__codelineno-6-36" href="#__codelineno-6-36"></a>    └── PlexusOneDesktop.icns               # App icon
 </code></pre></div>
-<h3 id="go-tui-parser">Go (TUI Parser)<a class="headerlink" href="#go-tui-parser" title="Permanent link">&para;</a></h3>
-<p>Follow standard Go conventions:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="c1">// Good</span>
-<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="kd">func</span><span class="w"> </span><span class="p">(</span><span class="nx">m</span><span class="w"> </span><span class="o">*</span><span class="nx">Manager</span><span class="p">)</span><span class="w"> </span><span class="nx">AttachSession</span><span class="p">(</span><span class="nx">ctx</span><span class="w"> </span><span class="nx">context</span><span class="p">.</span><span class="nx">Context</span><span class="p">,</span><span class="w"> </span><span class="nx">name</span><span class="w"> </span><span class="kt">string</span><span class="p">)</span><span class="w"> </span><span class="kt">error</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="nx">name</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s">&quot;&quot;</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="nx">ErrInvalidSession</span>
-<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="w">    </span><span class="p">}</span>
-<a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a><span class="w">    </span><span class="c1">// ...</span>
-<a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a><span class="p">}</span>
+<h2 id="key-dependencies">Key Dependencies<a class="headerlink" href="#key-dependencies" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Package</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://github.com/migueldeicaza/SwiftTerm">SwiftTerm</a></td>
+<td>Terminal emulation and rendering</td>
+</tr>
+<tr>
+<td><a href="https://github.com/plexusone/assistantkit-swift">AssistantKit</a></td>
+<td>AI prompt pattern detection</td>
+</tr>
+</tbody>
+</table>
+<h2 id="architecture">Architecture<a class="headerlink" href="#architecture" title="Permanent link">&para;</a></h2>
+<p>The app follows a multi-window architecture with shared state:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>AppState (Singleton)
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>├── SessionManager       # Shared - all tmux sessions
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>├── WindowStateManager   # Shared - window persistence
+<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>└── InputMonitor         # Shared - AI prompt detection
+<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a>
+<a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a>Window A                 Window B
+<a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a>├── PaneManager (local)  ├── PaneManager (local)
+<a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a>├── GridConfig (local)   └── GridConfig (local)
+<a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a>└── ContentView          └── ContentView
 </code></pre></div>
-<p><strong>Linting:</strong></p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>golangci-lint<span class="w"> </span>run
+<p><strong>Key principle</strong>: <code>SessionManager</code> is shared across windows (single source of truth for sessions), while <code>PaneManager</code> and <code>GridConfig</code> are per-window.</p>
+<h2 id="configuration">Configuration<a class="headerlink" href="#configuration" title="Permanent link">&para;</a></h2>
+<h3 id="state-persistence">State Persistence<a class="headerlink" href="#state-persistence" title="Permanent link">&para;</a></h3>
+<p>Window layouts and session attachments are saved to:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>~/.plexusone/state.json
 </code></pre></div>
-<h3 id="dart-mobile">Dart (Mobile)<a class="headerlink" href="#dart-mobile" title="Permanent link">&para;</a></h3>
-<p>Follow Dart style guide:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="c1">// Good</span>
-<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="kd">class</span><span class="w"> </span><span class="nc">WebSocketService</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="w">  </span><span class="kd">final</span><span class="w"> </span><span class="kt">String</span><span class="w"> </span><span class="n">_serverUrl</span><span class="p">;</span>
-<a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>
-<a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a><span class="w">  </span><span class="n">WebSocketService</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="n">_serverUrl</span><span class="p">);</span>
-<a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a>
-<a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a><span class="w">  </span><span class="n">Future</span><span class="o">&lt;</span><span class="kt">void</span><span class="o">&gt;</span><span class="w"> </span><span class="n">connect</span><span class="p">()</span><span class="w"> </span><span class="kd">async</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a><span class="w">    </span><span class="c1">// ...</span>
-<a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a><span class="w">  </span><span class="p">}</span>
-<a id="__codelineno-8-10" name="__codelineno-8-10" href="#__codelineno-8-10"></a><span class="p">}</span>
+<p>Format (v2):</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="p">{</span>
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="w">  </span><span class="nt">&quot;windows&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="w">    </span><span class="p">{</span>
+<a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a><span class="w">      </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;uuid&quot;</span><span class="p">,</span>
+<a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a><span class="w">      </span><span class="nt">&quot;gridColumns&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span>
+<a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a><span class="w">      </span><span class="nt">&quot;gridRows&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
+<a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a><span class="w">      </span><span class="nt">&quot;paneAttachments&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a><span class="w">        </span><span class="nt">&quot;1&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;coder-1&quot;</span><span class="p">,</span>
+<a id="__codelineno-9-9" name="__codelineno-9-9" href="#__codelineno-9-9"></a><span class="w">        </span><span class="nt">&quot;2&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;reviewer&quot;</span>
+<a id="__codelineno-9-10" name="__codelineno-9-10" href="#__codelineno-9-10"></a><span class="w">      </span><span class="p">}</span>
+<a id="__codelineno-9-11" name="__codelineno-9-11" href="#__codelineno-9-11"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-9-12" name="__codelineno-9-12" href="#__codelineno-9-12"></a><span class="w">  </span><span class="p">],</span>
+<a id="__codelineno-9-13" name="__codelineno-9-13" href="#__codelineno-9-13"></a><span class="w">  </span><span class="nt">&quot;savedAt&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2024-01-01T00:00:00Z&quot;</span><span class="p">,</span>
+<a id="__codelineno-9-14" name="__codelineno-9-14" href="#__codelineno-9-14"></a><span class="w">  </span><span class="nt">&quot;version&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span>
+<a id="__codelineno-9-15" name="__codelineno-9-15" href="#__codelineno-9-15"></a><span class="p">}</span>
 </code></pre></div>
-<p><strong>Linting:</strong></p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>flutter<span class="w"> </span>analyze
-</code></pre></div>
+<h3 id="environment-variables">Environment Variables<a class="headerlink" href="#environment-variables" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Variable</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>SHELL</code></td>
+<td><code>/bin/zsh</code></td>
+<td>Shell for new tmux sessions</td>
+</tr>
+<tr>
+<td><code>TERM</code></td>
+<td><code>xterm-256color</code></td>
+<td>Terminal type (set automatically)</td>
+</tr>
+<tr>
+<td><code>LANG</code></td>
+<td><code>en_US.UTF-8</code></td>
+<td>Locale (set if unset)</td>
+</tr>
+</tbody>
+</table>
 <h2 id="testing">Testing<a class="headerlink" href="#testing" title="Permanent link">&para;</a></h2>
-<h3 id="desktop">Desktop<a class="headerlink" href="#desktop" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="nb">cd</span><span class="w"> </span>apps/desktop
-<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>swift<span class="w"> </span><span class="nb">test</span>
+<p>Run all tests:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>swift<span class="w"> </span><span class="nb">test</span>
 </code></pre></div>
-<h3 id="tui-parser">TUI Parser<a class="headerlink" href="#tui-parser" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="nb">cd</span><span class="w"> </span>services/tuiparser
-<a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>go<span class="w"> </span><span class="nb">test</span><span class="w"> </span>./...
+<p>Run specific test class:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>swift<span class="w"> </span><span class="nb">test</span><span class="w"> </span>--filter<span class="w"> </span>SessionManagerTests
 </code></pre></div>
-<h3 id="mobile">Mobile<a class="headerlink" href="#mobile" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="nb">cd</span><span class="w"> </span>apps/mobile
-<a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>flutter<span class="w"> </span><span class="nb">test</span>
+<p>Run with verbose output:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>swift<span class="w"> </span><span class="nb">test</span><span class="w"> </span>-v
 </code></pre></div>
-<h2 id="documentation">Documentation<a class="headerlink" href="#documentation" title="Permanent link">&para;</a></h2>
-<h3 id="when-to-update-docs">When to Update Docs<a class="headerlink" href="#when-to-update-docs" title="Permanent link">&para;</a></h3>
+<h3 id="test-coverage">Test Coverage<a class="headerlink" href="#test-coverage" title="Permanent link">&para;</a></h3>
+<p>The test suite includes 78 tests covering:</p>
 <ul>
-<li>Adding new features</li>
-<li>Changing configuration options</li>
-<li>Modifying the WebSocket protocol</li>
-<li>Updating architecture</li>
+<li>Session parsing and status detection</li>
+<li>Window state persistence and migration</li>
+<li>Multi-window state management</li>
+<li>App initialization</li>
 </ul>
-<h3 id="building-docs-locally">Building Docs Locally<a class="headerlink" href="#building-docs-locally" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="nb">cd</span><span class="w"> </span>docs
-<a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>pip<span class="w"> </span>install<span class="w"> </span>mkdocs-material
-<a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a>mkdocs<span class="w"> </span>serve
+<h2 id="keyboard-shortcuts">Keyboard Shortcuts<a class="headerlink" href="#keyboard-shortcuts" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Shortcut</th>
+<th>Action</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>⌘N</td>
+<td>New Session</td>
+</tr>
+<tr>
+<td>⌘⇧N</td>
+<td>New Window</td>
+</tr>
+<tr>
+<td>⌘]</td>
+<td>Next Pane</td>
+</tr>
+<tr>
+<td>⌘[</td>
+<td>Previous Pane</td>
+</tr>
+<tr>
+<td>⌘A</td>
+<td>Select All (terminal)</td>
+</tr>
+</tbody>
+</table>
+<h2 id="troubleshooting">Troubleshooting<a class="headerlink" href="#troubleshooting" title="Permanent link">&para;</a></h2>
+<h3 id="tmux-not-found">tmux Not Found<a class="headerlink" href="#tmux-not-found" title="Permanent link">&para;</a></h3>
+<p>If the app shows "tmux Not Found" alert:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>brew<span class="w"> </span>install<span class="w"> </span>tmux
 </code></pre></div>
-<p>View at http://localhost:8000</p>
-<h2 id="architecture-decisions">Architecture Decisions<a class="headerlink" href="#architecture-decisions" title="Permanent link">&para;</a></h2>
-<h3 id="adr-process">ADR Process<a class="headerlink" href="#adr-process" title="Permanent link">&para;</a></h3>
-<p>For significant changes, create an Architecture Decision Record:</p>
+<p>Verify installation path:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>which<span class="w"> </span>tmux
+<a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a><span class="c1"># Should be /opt/homebrew/bin/tmux (Apple Silicon)</span>
+<a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a><span class="c1"># or /usr/local/bin/tmux (Intel)</span>
+</code></pre></div>
+<h3 id="build-errors">Build Errors<a class="headerlink" href="#build-errors" title="Permanent link">&para;</a></h3>
+<p>Clean and rebuild:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>swift<span class="w"> </span>package<span class="w"> </span>clean
+<a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>swift<span class="w"> </span>build
+</code></pre></div>
+<h3 id="package-resolution-failed">Package Resolution Failed<a class="headerlink" href="#package-resolution-failed" title="Permanent link">&para;</a></h3>
+<p>Reset package cache:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>rm<span class="w"> </span>-rf<span class="w"> </span>.build
+<a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a>rm<span class="w"> </span>Package.resolved
+<a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a>swift<span class="w"> </span>build
+</code></pre></div>
+<h3 id="console-logging">Console Logging<a class="headerlink" href="#console-logging" title="Permanent link">&para;</a></h3>
+<p>View app logs in Console.app:</p>
 <ol>
-<li>Create <code>docs/adr/NNNN-title.md</code></li>
-<li>Use the template in <code>docs/adr/template.md</code></li>
-<li>Discuss in PR before implementing</li>
+<li>Open Console.app</li>
+<li>Filter by process: <code>PlexusOneDesktop</code></li>
+<li>Look for <code>PlexusOne:</code> prefixed messages</li>
 </ol>
-<h3 id="design-documents">Design Documents<a class="headerlink" href="#design-documents" title="Permanent link">&para;</a></h3>
-<p>For features requiring detailed planning:</p>
+<p>Or use Terminal:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>log<span class="w"> </span>stream<span class="w"> </span>--predicate<span class="w"> </span><span class="s1">&#39;process == &quot;PlexusOneDesktop&quot;&#39;</span>
+</code></pre></div>
+<h3 id="session-not-attaching">Session Not Attaching<a class="headerlink" href="#session-not-attaching" title="Permanent link">&para;</a></h3>
+<p>If sessions appear in the list but won't attach:</p>
 <ol>
-<li>Create <code>docs/design/FEAT_&lt;name&gt;_PRD.md</code></li>
-<li>Include problem statement, proposed solution, alternatives</li>
-<li>Get approval before implementation</li>
+<li>
+<p>Verify tmux server is running:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>tmux<span class="w"> </span>list-sessions
+</code></pre></div>
+</li>
+<li>
+<p>Check for zombie processes:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>ps<span class="w"> </span>aux<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>tmux
+</code></pre></div>
+</li>
+<li>
+<p>Restart tmux server:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a>tmux<span class="w"> </span>kill-server
+<a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a>tmux<span class="w"> </span>new-session<span class="w"> </span>-d<span class="w"> </span>-s<span class="w"> </span><span class="nb">test</span>
+</code></pre></div>
+</li>
 </ol>
-<h2 id="reporting-issues">Reporting Issues<a class="headerlink" href="#reporting-issues" title="Permanent link">&para;</a></h2>
-<h3 id="bug-reports">Bug Reports<a class="headerlink" href="#bug-reports" title="Permanent link">&para;</a></h3>
-<p>Include:</p>
-<ul>
-<li>Component affected (desktop, mobile, tuiparser)</li>
-<li>Steps to reproduce</li>
-<li>Expected vs actual behavior</li>
-<li>Version/commit hash</li>
-<li>Relevant logs</li>
-</ul>
-<h3 id="feature-requests">Feature Requests<a class="headerlink" href="#feature-requests" title="Permanent link">&para;</a></h3>
-<p>Include:</p>
-<ul>
-<li>Use case description</li>
-<li>Proposed solution</li>
-<li>Alternatives considered</li>
-<li>Willingness to implement</li>
-</ul>
-<h2 id="code-of-conduct">Code of Conduct<a class="headerlink" href="#code-of-conduct" title="Permanent link">&para;</a></h2>
-<p>Be respectful and constructive. We're all here to build useful software.</p>
-<h2 id="license">License<a class="headerlink" href="#license" title="Permanent link">&para;</a></h2>
-<p>Contributions are licensed under the same terms as the project.</p>
+<h2 id="comparison-with-mobile-apps">Comparison with Mobile Apps<a class="headerlink" href="#comparison-with-mobile-apps" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th>Desktop</th>
+<th>Flutter Mobile</th>
+<th>Native iOS</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Platform</td>
+<td>macOS</td>
+<td>iOS, Android, Web</td>
+<td>iOS, iPadOS</td>
+</tr>
+<tr>
+<td>Terminal</td>
+<td>SwiftTerm (local)</td>
+<td>xterm (remote)</td>
+<td>SwiftTerm (remote)</td>
+</tr>
+<tr>
+<td>tmux</td>
+<td>Direct attachment</td>
+<td>Via tuiparser</td>
+<td>Via tuiparser</td>
+</tr>
+<tr>
+<td>Multi-window</td>
+<td>Yes</td>
+<td>No</td>
+<td>No</td>
+</tr>
+<tr>
+<td>Grid layouts</td>
+<td>Yes (up to 4×4)</td>
+<td>No</td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+<p>The desktop app is the primary interface for direct tmux management, while mobile apps connect remotely via the tuiparser WebSocket bridge.</p>
 
 
 
