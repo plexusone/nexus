@@ -10,6 +10,8 @@
 
 A multi-agent orchestration platform for AI CLI tools like Claude Code and Kiro CLI.
 
+![](docs/images/ss_plexusone-desktop_claude-code-12x.png)
+
 ## Repository Structure
 
 ```
