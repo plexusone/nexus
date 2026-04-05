@@ -371,6 +371,13 @@ Autonomous monitoring and intervention.
 
 ### Desktop App
 
+- [x] **Session switching fixes**: Fixed three related bugs where terminals showed wrong session content:
+  - Pop-out windows showing first pane's session instead of intended session
+  - Grid resize causing session/terminal mismatch
+  - Session picker dropdown not changing terminal content
+  - **Root cause**: `attach(to:)` wasn't terminating the existing tmux attach process before starting a new one
+  - **Fix**: Added `terminate()` call in `attach(to:)` and proper process cleanup in `detach()`. Added `.id(paneId)` to GridLayoutView for stable view identity. (2026-04-04)
+
 - [x] **Terminal trackpad scrolling**: Fixed two-finger trackpad scrolling by sending mouse wheel escape sequences (button 64/65) to terminal applications like tmux. Updated SwiftTerm to main branch for NSScroller Auto Layout fix. (2026-03-28)
 
 - [x] **Unit test infrastructure**: Added protocol-based dependency injection (CommandExecuting, FileSystemAccessing), mocks, and 78 unit tests for SessionManager, WindowStateManager, and AppState. (2026-03-29)
