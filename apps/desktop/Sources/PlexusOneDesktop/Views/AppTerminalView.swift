@@ -22,6 +22,18 @@ class AppTerminalView: LocalProcessTerminalView {
         // The parent class layout() handles this
     }
 
+    // MARK: - Scrolling
+
+    /// Scroll the terminal view to show the latest output (bottom of buffer)
+    /// Call this when the user sends input to ensure they see the response
+    func scrollToBottom() {
+        // Only scroll if we're not already at the bottom
+        // scrollPosition 1.0 = bottom, 0.0 = top
+        if scrollPosition < 1.0 {
+            scroll(toPosition: 1.0)
+        }
+    }
+
     // MARK: - Mouse Wheel Event Handling
 
     /// Send mouse wheel event to terminal application (e.g., tmux with mouse mode)

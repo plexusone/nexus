@@ -64,6 +64,14 @@ class TerminalContainerView: NSView {
         terminalView.mouseDown(with: event)
     }
 
+    override func keyDown(with event: NSEvent) {
+        // When user types, ensure we're showing the latest output
+        // This prevents "stuck in scrollback" issues where old content is visible
+        terminalView.scrollToBottom()
+        // Forward to terminal for processing
+        terminalView.keyDown(with: event)
+    }
+
     /// Check if this terminal has focus and notify if changed
     func updateFocusState() {
         let isFocused = window?.firstResponder === terminalView
